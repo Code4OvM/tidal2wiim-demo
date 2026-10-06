@@ -123,3 +123,15 @@ Zum Nachvollziehen im Unterricht: [Beide Darstellungen als PDF](docs/datenmodell
 Tidal2WiiM ist aus einem persönlichen Bedarf entstanden und wird auf dem eigenen Tablet genutzt. Die Kernfunktionen für Sammlung, Organisation und Übergabe an TIDAL sind umgesetzt. Das Repository dokumentiert diesen Entwicklungsstand und bildet die Grundlage für weitere Verbesserungen aus dem Alltag.
 
 *Unabhängiges privates Projekt; keine offizielle Anwendung von TIDAL oder WiiM.*
+
+## Lizenz und Weiterverwendung
+
+[![Creative Commons BY-NC 4.0](https://licensebuttons.net/l/by-nc/4.0/88x31.png)](https://creativecommons.org/licenses/by-nc/4.0/deed.de)
+
+Die Dokumentation, Datenmodelle und selbst erstellten Grafiken dieses Projekts stehen unter [Creative Commons Namensnennung – Nicht kommerziell 4.0 International (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/deed.de). Sie dürfen für nichtkommerzielle Zwecke genutzt, kopiert, weitergegeben und bearbeitet werden. Dabei sind **Frank / Code4OvM**, die Quelle und die Lizenz anzugeben; Änderungen müssen kenntlich gemacht werden.
+
+Der eigene **Quellcode der App** steht unter der [PolyForm Noncommercial License 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0). Sie erlaubt die Nutzung, Bearbeitung und Weitergabe im Rahmen ihrer Bedingungen für nichtkommerzielle Zwecke und ausdrücklich auch die Nutzung durch Bildungseinrichtungen. Lizenz- und vorgeschriebene Rechtehinweise müssen bei der Weitergabe erhalten bleiben.
+
+Required Notice: Copyright 2026 Frank / Code4OvM (https://github.com/Code4OvM)
+
+Diese Freigaben gelten nur, soweit eigene Rechte bestehen. Eingebundene Bibliotheken, fremde Inhalte sowie Marken und Logos Dritter unterliegen weiterhin ihren jeweiligen Rechten und Lizenzbedingungen.
