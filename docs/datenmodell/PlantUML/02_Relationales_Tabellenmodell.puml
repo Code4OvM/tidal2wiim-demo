@@ -1,0 +1,110 @@
+@startuml
+' Tidal2WiiM | Relationales Ist-Modell | SQLite-Schema-Version 3
+' Primärquelle: Tidal2WiiM_Anmeldung_komfort.zip,
+'              lib/data/lokale_datenbank.dart, Zeilen 24-106.
+' Vier Anwendungstabellen, ein deklarierter Fremdschlüssel, zwei explizite Indizes.
+' Kein erfundener FK von category_albums.album_id nach album_cache!
+
+hide circle
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 15
+skinparam shadowing false
+skinparam linetype ortho
+skinparam nodesep 50
+skinparam ranksep 65
+skinparam class {
+  BackgroundColor #FAFCFD
+  BorderColor #244454
+  HeaderBackgroundColor #E6EFF1
+  FontColor #172C37
+}
+skinparam note {
+  BackgroundColor #FFF7E8
+  BorderColor #AB8750
+  FontColor #423727
+}
+
+title Tidal2WiiM – Relationales Tabellenmodell\nIst-Schema: tidal2wiim.db / Version 3
+
+entity "categories" as CAT {
+  * <u>id</u> : INTEGER <<PK, AUTO>>
+  --
+  * name : TEXT <<UQ>>
+  * created_at : INTEGER
+  * updated_at : INTEGER
+}
+
+entity "category_albums" as CA {
+  * <u>category_id</u> : INTEGER <<PK, FK1>>
+  * <u>album_id</u> : TEXT <<PK>>
+}
+
+entity "album_cache" as AC {
+  * <u>album_id</u> : TEXT <<PK>>
+  --
+  * collection_position : INTEGER
+  * title : TEXT
+  * artists_json : TEXT
+  release_date : TEXT
+  cover_url : TEXT
+  * metadata_missing : INTEGER = 0
+  * cached_at : INTEGER
+}
+
+entity "artist_preferences" as AP {
+  * <u>artist_id</u> : TEXT <<PK>>
+  --
+  custom_name : TEXT
+  * sort_name : TEXT
+  * updated_at : INTEGER
+}
+
+' Identifizierende Beziehung: FK1 ist Bestandteil des zusammengesetzten PK.
+' Jede Zuordnung hat exakt eine Kategorie; eine Kategorie hat 0..N Zuordnungen.
+CAT ||--o{ CA : "FK1: category_id → id\nON DELETE CASCADE"
+
+' Nur Layoutsteuerung, keine zusätzlichen fachlichen oder SQL-Beziehungen.
+CAT -[hidden]right- AC
+CA -[hidden]right- AP
+AC -[hidden]down- AP
+
+note left of CAT
+  id: INTEGER PRIMARY KEY AUTOINCREMENT.
+  name: NOT NULL COLLATE NOCASE UNIQUE.
+  NOCASE ist die im Quellcode benutzte Kollation.
+end note
+
+note bottom of CA
+  PK = (category_id, album_id).
+  album_id ist KEIN SQL-Fremdschlüssel.
+  Logischer Abgleich mit album_cache.album_id;
+  eine Cachezeile muss dafür nicht existieren.
+  Index: idx_category_albums_album(album_id).
+end note
+
+note top of AC
+  artists_json: JSON-Liste aus {id, name}.
+  Keine separate Künstler- oder Album/Künstler-Tabelle.
+  Index: idx_album_cache_position(collection_position).
+end note
+
+note bottom of AP
+  artist_id identifiziert einen TIDAL-Künstler.
+  Keine Künstlertabelle, deshalb kein SQL-FK.
+  Persönliche Sortierung bleibt vom Albumcache getrennt.
+end note
+
+legend bottom
+  PK = Primärschlüssel; unterstrichen = Schlüsselattribut.
+  FK1 = tatsächlich deklarierter Fremdschlüssel; UQ = UNIQUE; AUTO = AUTOINCREMENT.
+  * = nicht NULL (bei categories.id durch INTEGER PRIMARY KEY).
+  Ohne * = NULL erlaubt. Datentypen entsprechen dem SQLite-DDL.
+  || = genau 1; o{ = 0..N. Durchgezogene Linie = identifizierende IE-Beziehung.
+  Fachliche Zuordnung Album/Kategorie: n:m. Im Ist-Schema wird nur die Kategorie-Seite per FK erzwungen.
+  Zeitstempel: Millisekunden seit Unix-Epoche; release_date: ISO-8601-Text.
+  metadata_missing: App schreibt 0/1; kein CHECK-Constraint im Schema.
+  Kein SQL-FK und keine Kante auf artists_json: Beziehungen im JSON sind nicht relational abgesichert.
+endlegend
+
+@enduml

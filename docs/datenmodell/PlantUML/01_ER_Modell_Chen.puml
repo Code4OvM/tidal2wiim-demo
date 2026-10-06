@@ -1,0 +1,73 @@
+@startchen
+' Tidal2WiiM | Fachliches ER-Modell | 04.10.2026
+' Quellen: Tidal2WiiM_Anmeldung_komfort.zip, lib/models/modelle.dart
+'          sowie lib/data/lokale_datenbank.dart (SQLite-Schema 3).
+' Chen-Notation mit (min,max)-Teilnahmegrenzen an der jeweiligen Entität.
+' Keine SQL-Tabellenansicht: Kuenstler ist ein Fachobjekt, keine SQLite-Tabelle.
+' Technische Cacheattribute und Verwaltungszeitstempel: siehe Tabellenmodell.
+
+left to right direction
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 16
+skinparam shadowing false
+
+title Tidal2WiiM – Fachliches ER-Modell (Chen)
+
+entity "Album" as ALBUM {
+  "TIDAL-Album-ID" as album_id <<key>>
+  "Titel" as title
+  "Erscheinungsdatum" as release_date
+  "Cover-URL" as cover_url
+  "Jahr" as jahr <<derived>>
+}
+
+entity "Künstler" as KUENSTLER {
+  "TIDAL-Künstler-ID" as artist_id <<key>>
+  "TIDAL-Name" as name
+}
+
+entity "Kategorie" as KATEGORIE {
+  "Kategorie-ID" as id <<key>>
+  "Name" as name
+  "Albumanzahl" as albumAnzahl <<derived>>
+}
+
+entity "Künstlerpräferenz" as PRAEFERENZ {
+  "TIDAL-Künstler-ID" as artist_id <<key>>
+  "Eigener Anzeigename" as custom_name
+  "Sortiername" as sort_name
+}
+
+relationship "wirkt mit an" as MITWIRKUNG {
+}
+relationship "ist zugeordnet" as ZUORDNUNG {
+}
+relationship "hat lokale Präferenz" as INDIVIDUALISIERUNG {
+}
+
+' Je Album 0..N bekannte Künstler, je Künstler 0..N betrachtete Alben.
+' Minimum 0 beim Album: Die App verarbeitet auch fehlende Künstler-Metadaten.
+KUENSTLER -(0,N)- MITWIRKUNG
+ALBUM -(0,N)- MITWIRKUNG
+
+' Je Album 0..N Kategorien und je Kategorie 0..N Alben: optionale n:m-Beziehung.
+ALBUM -(0,N)- ZUORDNUNG
+KATEGORIE -(0,N)- ZUORDNUNG
+
+' Je Künstler 0..1 lokale Präferenz; jede Präferenz gehört zu genau einem
+' TIDAL-Künstler. Das ist fachliche Zugehörigkeit, kein deklarierter SQL-FK.
+KUENSTLER -(0,1)- INDIVIDUALISIERUNG
+PRAEFERENZ =(1,1)= INDIVIDUALISIERUNG
+
+legend bottom
+  Rechteck = Entitätstyp; Raute = Beziehungstyp; Ellipse = Attribut.
+  Unterstrichen = Schlüssel; gestrichelte Ellipse = abgeleitetes Attribut.
+  (min,max) beschreibt die Teilnahme EINER Instanz der benachbarten Entität.
+  0 = optional; 1 = genau einmal; N = beliebig viele.
+  Breite Linie = vollständige Teilnahme (hier: jede Künstlerpräferenz).
+  Künstler werden im Ist-Schema als JSON im Albumcache gespeichert.
+  Titellisten, Token und Coverdateien sind nicht Teil des lokalen Tabellenschemas.
+endlegend
+
+@endchen

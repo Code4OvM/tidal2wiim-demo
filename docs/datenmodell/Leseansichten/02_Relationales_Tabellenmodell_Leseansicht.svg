@@ -1,0 +1,179 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1720" height="1220" viewBox="0 0 1720 1220">
+<rect width="1720" height="1220" fill="white"/>
+<rect x="0" y="0" width="1720" height="102" fill="#193743" stroke="#193743" stroke-width="1.7" rx="0"/>
+<text x="46" y="32" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="bold" fill="#BBD3D9" text-anchor="start">02 / RELATIONALE SICHT</text>
+<text x="46" y="69" font-family="DejaVu Sans, sans-serif" font-size="29" font-weight="bold" fill="white" text-anchor="start">Relationales Tabellenmodell</text>
+<text x="46" y="135" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#52636B" text-anchor="start">Ist-Schema: tidal2wiim.db, Version 3 · Nur tatsächlich deklarierte SQL-Fremdschlüssel erhalten Beziehungslinien.</text>
+<line x1="415" y1="448" x2="415" y2="690" stroke="#45616C" stroke-width="1.6"/>
+<line x1="405" y1="461" x2="425" y2="461" stroke="#45616C" stroke-width="2"/>
+<line x1="405" y1="470" x2="425" y2="470" stroke="#45616C" stroke-width="2"/>
+<circle cx="415" cy="659" r="7" fill="white" stroke="#45616C" stroke-width="1.8"/>
+<line x1="415" y1="672" x2="402" y2="690" stroke="#45616C" stroke-width="1.6"/>
+<line x1="415" y1="672" x2="428" y2="690" stroke="#45616C" stroke-width="1.6"/>
+<text x="446" y="552" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">FK1: category_id → id</text>
+<text x="446" y="580" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">ON DELETE CASCADE</text>
+<text x="446" y="608" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">Identifizierend: FK ist Teil des PK.</text>
+<text x="447" y="477" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="middle">1</text>
+<text x="362" y="670" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="middle">0..N</text>
+<rect x="65" y="195" width="700" height="253" fill="white" stroke="#45616C" stroke-width="1.7" rx="0"/>
+<rect x="65" y="195" width="700" height="49" fill="#193743" stroke="#193743" stroke-width="1.7" rx="0"/>
+<text x="85" y="228" font-family="DejaVu Sans, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="start">categories</text>
+<rect x="65" y="244" width="700" height="36" fill="#DCECEE" stroke="#DCECEE" stroke-width="1.7" rx="0"/>
+<text x="83" y="269" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold" fill="#193743" text-anchor="start">Attribut</text>
+<text x="401.0" y="269" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold" fill="#193743" text-anchor="start">Datentyp</text>
+<text x="527.0" y="269" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold" fill="#193743" text-anchor="start">NULL</text>
+<text x="625.0" y="269" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold" fill="#193743" text-anchor="start">Kennzeichen</text>
+<line x1="65" y1="280" x2="765" y2="280" stroke="#D8E2E5" stroke-width="1"/>
+<text x="83" y="308" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="start">id</text>
+<line x1="83" y1="311" x2="99.421875" y2="311" stroke="#193743" stroke-width="1.15"/>
+<text x="401.0" y="308" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">INTEGER</text>
+<text x="527.0" y="308" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">nein¹</text>
+<text x="625.0" y="308" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold" fill="#193743" text-anchor="start">PK / AUTO</text>
+<rect x="66" y="322" width="698" height="42" fill="#F6F9FA" stroke="#F6F9FA" stroke-width="0" rx="0"/>
+<line x1="65" y1="322" x2="765" y2="322" stroke="#D8E2E5" stroke-width="1"/>
+<text x="83" y="350" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="start">name</text>
+<text x="401.0" y="350" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">TEXT</text>
+<text x="527.0" y="350" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">nein</text>
+<text x="625.0" y="350" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal" fill="#193743" text-anchor="start">UQ</text>
+<line x1="65" y1="364" x2="765" y2="364" stroke="#D8E2E5" stroke-width="1"/>
+<text x="83" y="392" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="start">created_at</text>
+<text x="401.0" y="392" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">INTEGER</text>
+<text x="527.0" y="392" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">nein</text>
+<text x="625.0" y="392" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal" fill="#193743" text-anchor="start"></text>
+<rect x="66" y="406" width="698" height="42" fill="#F6F9FA" stroke="#F6F9FA" stroke-width="0" rx="0"/>
+<line x1="65" y1="406" x2="765" y2="406" stroke="#D8E2E5" stroke-width="1"/>
+<text x="83" y="434" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="start">updated_at</text>
+<text x="401.0" y="434" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">INTEGER</text>
+<text x="527.0" y="434" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">nein</text>
+<text x="625.0" y="434" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal" fill="#193743" text-anchor="start"></text>
+<rect x="65" y="195" width="700" height="253" fill="none" stroke="#45616C" stroke-width="1.7" rx="0"/>
+<rect x="65" y="690" width="700" height="169" fill="white" stroke="#45616C" stroke-width="1.7" rx="0"/>
+<rect x="65" y="690" width="700" height="49" fill="#193743" stroke="#193743" stroke-width="1.7" rx="0"/>
+<text x="85" y="723" font-family="DejaVu Sans, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="start">category_albums</text>
+<rect x="65" y="739" width="700" height="36" fill="#DCECEE" stroke="#DCECEE" stroke-width="1.7" rx="0"/>
+<text x="83" y="764" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold" fill="#193743" text-anchor="start">Attribut</text>
+<text x="401.0" y="764" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold" fill="#193743" text-anchor="start">Datentyp</text>
+<text x="527.0" y="764" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold" fill="#193743" text-anchor="start">NULL</text>
+<text x="625.0" y="764" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold" fill="#193743" text-anchor="start">Kennzeichen</text>
+<line x1="65" y1="775" x2="765" y2="775" stroke="#D8E2E5" stroke-width="1"/>
+<text x="83" y="803" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="start">category_id</text>
+<line x1="83" y1="806" x2="187.984375" y2="806" stroke="#193743" stroke-width="1.15"/>
+<text x="401.0" y="803" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">INTEGER</text>
+<text x="527.0" y="803" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">nein</text>
+<text x="625.0" y="803" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold" fill="#193743" text-anchor="start">PK / FK1</text>
+<rect x="66" y="817" width="698" height="42" fill="#F6F9FA" stroke="#F6F9FA" stroke-width="0" rx="0"/>
+<line x1="65" y1="817" x2="765" y2="817" stroke="#D8E2E5" stroke-width="1"/>
+<text x="83" y="845" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="start">album_id</text>
+<line x1="83" y1="848" x2="164.8125" y2="848" stroke="#193743" stroke-width="1.15"/>
+<text x="401.0" y="845" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">TEXT</text>
+<text x="527.0" y="845" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">nein</text>
+<text x="625.0" y="845" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold" fill="#193743" text-anchor="start">PK</text>
+<rect x="65" y="690" width="700" height="169" fill="none" stroke="#45616C" stroke-width="1.7" rx="0"/>
+<rect x="875" y="195" width="780" height="421" fill="white" stroke="#45616C" stroke-width="1.7" rx="0"/>
+<rect x="875" y="195" width="780" height="49" fill="#193743" stroke="#193743" stroke-width="1.7" rx="0"/>
+<text x="895" y="228" font-family="DejaVu Sans, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="start">album_cache</text>
+<rect x="875" y="244" width="780" height="36" fill="#DCECEE" stroke="#DCECEE" stroke-width="1.7" rx="0"/>
+<text x="893" y="269" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold" fill="#193743" text-anchor="start">Attribut</text>
+<text x="1249.4" y="269" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold" fill="#193743" text-anchor="start">Datentyp</text>
+<text x="1389.8000000000002" y="269" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold" fill="#193743" text-anchor="start">NULL</text>
+<text x="1499.0" y="269" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold" fill="#193743" text-anchor="start">Kennzeichen</text>
+<line x1="875" y1="280" x2="1655" y2="280" stroke="#D8E2E5" stroke-width="1"/>
+<text x="893" y="308" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="start">album_id</text>
+<line x1="893" y1="311" x2="974.8125" y2="311" stroke="#193743" stroke-width="1.15"/>
+<text x="1249.4" y="308" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">TEXT</text>
+<text x="1389.8000000000002" y="308" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">nein</text>
+<text x="1499.0" y="308" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold" fill="#193743" text-anchor="start">PK</text>
+<rect x="876" y="322" width="778" height="42" fill="#F6F9FA" stroke="#F6F9FA" stroke-width="0" rx="0"/>
+<line x1="875" y1="322" x2="1655" y2="322" stroke="#D8E2E5" stroke-width="1"/>
+<text x="893" y="350" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="start">collection_position</text>
+<text x="1249.4" y="350" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">INTEGER</text>
+<text x="1389.8000000000002" y="350" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">nein</text>
+<text x="1499.0" y="350" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal" fill="#193743" text-anchor="start"></text>
+<line x1="875" y1="364" x2="1655" y2="364" stroke="#D8E2E5" stroke-width="1"/>
+<text x="893" y="392" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="start">title</text>
+<text x="1249.4" y="392" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">TEXT</text>
+<text x="1389.8000000000002" y="392" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">nein</text>
+<text x="1499.0" y="392" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal" fill="#193743" text-anchor="start"></text>
+<rect x="876" y="406" width="778" height="42" fill="#F6F9FA" stroke="#F6F9FA" stroke-width="0" rx="0"/>
+<line x1="875" y1="406" x2="1655" y2="406" stroke="#D8E2E5" stroke-width="1"/>
+<text x="893" y="434" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="start">artists_json</text>
+<text x="1249.4" y="434" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">TEXT</text>
+<text x="1389.8000000000002" y="434" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">nein</text>
+<text x="1499.0" y="434" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal" fill="#193743" text-anchor="start"></text>
+<line x1="875" y1="448" x2="1655" y2="448" stroke="#D8E2E5" stroke-width="1"/>
+<text x="893" y="476" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="start">release_date</text>
+<text x="1249.4" y="476" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">TEXT</text>
+<text x="1389.8000000000002" y="476" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">ja</text>
+<text x="1499.0" y="476" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal" fill="#193743" text-anchor="start"></text>
+<rect x="876" y="490" width="778" height="42" fill="#F6F9FA" stroke="#F6F9FA" stroke-width="0" rx="0"/>
+<line x1="875" y1="490" x2="1655" y2="490" stroke="#D8E2E5" stroke-width="1"/>
+<text x="893" y="518" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="start">cover_url</text>
+<text x="1249.4" y="518" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">TEXT</text>
+<text x="1389.8000000000002" y="518" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">ja</text>
+<text x="1499.0" y="518" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal" fill="#193743" text-anchor="start"></text>
+<line x1="875" y1="532" x2="1655" y2="532" stroke="#D8E2E5" stroke-width="1"/>
+<text x="893" y="560" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="start">metadata_missing</text>
+<text x="1249.4" y="560" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">INTEGER</text>
+<text x="1389.8000000000002" y="560" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">nein</text>
+<text x="1499.0" y="560" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal" fill="#193743" text-anchor="start">Default 0</text>
+<rect x="876" y="574" width="778" height="42" fill="#F6F9FA" stroke="#F6F9FA" stroke-width="0" rx="0"/>
+<line x1="875" y1="574" x2="1655" y2="574" stroke="#D8E2E5" stroke-width="1"/>
+<text x="893" y="602" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="start">cached_at</text>
+<text x="1249.4" y="602" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">INTEGER</text>
+<text x="1389.8000000000002" y="602" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">nein</text>
+<text x="1499.0" y="602" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal" fill="#193743" text-anchor="start"></text>
+<rect x="875" y="195" width="780" height="421" fill="none" stroke="#45616C" stroke-width="1.7" rx="0"/>
+<rect x="875" y="790" width="780" height="253" fill="white" stroke="#45616C" stroke-width="1.7" rx="0"/>
+<rect x="875" y="790" width="780" height="49" fill="#193743" stroke="#193743" stroke-width="1.7" rx="0"/>
+<text x="895" y="823" font-family="DejaVu Sans, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="start">artist_preferences</text>
+<rect x="875" y="839" width="780" height="36" fill="#DCECEE" stroke="#DCECEE" stroke-width="1.7" rx="0"/>
+<text x="893" y="864" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold" fill="#193743" text-anchor="start">Attribut</text>
+<text x="1249.4" y="864" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold" fill="#193743" text-anchor="start">Datentyp</text>
+<text x="1389.8000000000002" y="864" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold" fill="#193743" text-anchor="start">NULL</text>
+<text x="1499.0" y="864" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold" fill="#193743" text-anchor="start">Kennzeichen</text>
+<line x1="875" y1="875" x2="1655" y2="875" stroke="#D8E2E5" stroke-width="1"/>
+<text x="893" y="903" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="start">artist_id</text>
+<line x1="893" y1="906" x2="965.359375" y2="906" stroke="#193743" stroke-width="1.15"/>
+<text x="1249.4" y="903" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">TEXT</text>
+<text x="1389.8000000000002" y="903" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">nein</text>
+<text x="1499.0" y="903" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold" fill="#193743" text-anchor="start">PK</text>
+<rect x="876" y="917" width="778" height="42" fill="#F6F9FA" stroke="#F6F9FA" stroke-width="0" rx="0"/>
+<line x1="875" y1="917" x2="1655" y2="917" stroke="#D8E2E5" stroke-width="1"/>
+<text x="893" y="945" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="start">custom_name</text>
+<text x="1249.4" y="945" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">TEXT</text>
+<text x="1389.8000000000002" y="945" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">ja</text>
+<text x="1499.0" y="945" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal" fill="#193743" text-anchor="start"></text>
+<line x1="875" y1="959" x2="1655" y2="959" stroke="#D8E2E5" stroke-width="1"/>
+<text x="893" y="987" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="start">sort_name</text>
+<text x="1249.4" y="987" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">TEXT</text>
+<text x="1389.8000000000002" y="987" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">nein</text>
+<text x="1499.0" y="987" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal" fill="#193743" text-anchor="start"></text>
+<rect x="876" y="1001" width="778" height="42" fill="#F6F9FA" stroke="#F6F9FA" stroke-width="0" rx="0"/>
+<line x1="875" y1="1001" x2="1655" y2="1001" stroke="#D8E2E5" stroke-width="1"/>
+<text x="893" y="1029" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="start">updated_at</text>
+<text x="1249.4" y="1029" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">INTEGER</text>
+<text x="1389.8000000000002" y="1029" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">nein</text>
+<text x="1499.0" y="1029" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal" fill="#193743" text-anchor="start"></text>
+<rect x="875" y="790" width="780" height="253" fill="none" stroke="#45616C" stroke-width="1.7" rx="0"/>
+<text x="83" y="490" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal" fill="#52636B" text-anchor="start">name: UNIQUE + NOCASE.</text>
+<text x="83" y="517" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal" fill="#52636B" text-anchor="start">¹ id: INTEGER PRIMARY KEY</text>
+<text x="83" y="544" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal" fill="#52636B" text-anchor="start">mit AUTOINCREMENT.</text>
+<text x="83" y="571" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal" fill="#52636B" text-anchor="start">SQLite erzeugt die ID bei Bedarf.</text>
+<rect x="65" y="883" width="700" height="177" fill="#FBF4E8" stroke="#D2B889" stroke-width="1" rx="7"/>
+<text x="83" y="911" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">PK = (category_id, album_id), nicht zwei einzelne Primärschlüssel.</text>
+<text x="83" y="940" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">album_id ist KEIN SQL-FK auf album_cache.</text>
+<text x="83" y="969" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">Ein Album kann zugeordnet bleiben, obwohl seine Cachezeile fehlt.</text>
+<text x="83" y="998" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">Index: idx_category_albums_album(album_id).</text>
+<text x="83" y="1027" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">FK1 wird durch PRAGMA foreign_keys = ON aktiviert.</text>
+<text x="893" y="647" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#52636B" text-anchor="start">artists_json: JSON-Liste aus Künstler-ID und Name; keine Künstlertabelle.</text>
+<text x="893" y="674" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#52636B" text-anchor="start">Index: idx_album_cache_position(collection_position).</text>
+<text x="893" y="701" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#52636B" text-anchor="start">metadata_missing: App schreibt 0/1, aber SQL hat keinen CHECK.</text>
+<text x="893" y="728" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#52636B" text-anchor="start">release_date: ISO-8601-Text; cached_at: Unixzeit in Millisekunden.</text>
+<text x="893" y="1085" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#52636B" text-anchor="start">artist_id ist ein TIDAL-Bezug, aber kein SQL-Fremdschlüssel.</text>
+<text x="893" y="1112" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#52636B" text-anchor="start">Die Präferenzen bestehen unabhängig vom aktuellen Albumcache.</text>
+<line x1="45" y1="1140" x2="1675" y2="1140" stroke="#CCD7DA" stroke-width="1.6"/>
+<text x="46" y="1167" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="normal" fill="#52636B" text-anchor="start">PK = Primärschlüssel · FK1 = deklarierter Fremdschlüssel · UQ = UNIQUE · AUTO = AUTOINCREMENT · Zeitstempel als INTEGER (ms).</text>
+<line x1="45" y1="1180" x2="1675" y2="1180" stroke="#CCD7DA" stroke-width="1.6"/>
+<text x="45" y="1210" font-family="DejaVu Sans, sans-serif" font-size="14" font-weight="normal" fill="#52636B" text-anchor="start">Leseansicht aus den PlantUML-Quelldaten · Ersatzrenderer, kein nativer PlantUML-Export</text>
+<text x="1675" y="1210" font-family="DejaVu Sans, sans-serif" font-size="14" font-weight="normal" fill="#52636B" text-anchor="end">Tidal2WiiM · Schema 3 · 04.10.2026</text>
+</svg>

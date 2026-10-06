@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1720" height="1100" viewBox="0 0 1720 1100">
+<rect width="1720" height="1100" fill="white"/>
+<rect x="0" y="0" width="1720" height="102" fill="#193743" stroke="#193743" stroke-width="1.7" rx="0"/>
+<text x="46" y="32" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="bold" fill="#BBD3D9" text-anchor="start">01 / FACHLICHE SICHT</text>
+<text x="46" y="69" font-family="DejaVu Sans, sans-serif" font-size="29" font-weight="bold" fill="white" text-anchor="start">ER-Modell in Chen-Notation</text>
+<text x="46" y="135" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#52636B" text-anchor="start">Entitäten, Attribute und Beziehungen – noch keine Abbildung auf SQL-Tabellen.</text>
+<line x1="505" y1="340" x2="670" y2="340" stroke="#45616C" stroke-width="1.6"/>
+<line x1="930" y1="340" x2="1160" y2="340" stroke="#45616C" stroke-width="1.6"/>
+<text x="548" y="324" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="middle">(0,N)</text>
+<text x="1100" y="324" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="middle">(0,N)</text>
+<polygon points="670,340 800,290 930,340 800,390" fill="#FBF4E8" stroke="#45616C" stroke-width="1.8"/>
+<text x="800" y="347" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="middle">wirkt mit an</text>
+<line x1="395" y1="371" x2="395" y2="475" stroke="#45616C" stroke-width="1.6"/>
+<line x1="395" y1="595" x2="395" y2="679" stroke="#45616C" stroke-width="4"/>
+<text x="343" y="415" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="middle">(0,1)</text>
+<text x="339" y="650" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="middle">(1,1)</text>
+<polygon points="395,475 543,535 395,595 247,535" fill="#FBF4E8" stroke="#45616C" stroke-width="1.8"/>
+<text x="395" y="528" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="middle">hat lokale</text>
+<text x="395" y="553" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="middle">Präferenz</text>
+<line x1="1255" y1="371" x2="1255" y2="475" stroke="#45616C" stroke-width="1.6"/>
+<line x1="1255" y1="595" x2="1255" y2="679" stroke="#45616C" stroke-width="1.6"/>
+<text x="1310" y="414" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="middle">(0,N)</text>
+<text x="1310" y="650" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="middle">(0,N)</text>
+<polygon points="1255,475 1393,535 1255,595 1117,535" fill="#FBF4E8" stroke="#45616C" stroke-width="1.8"/>
+<text x="1255" y="528" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="middle">ist</text>
+<text x="1255" y="553" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal" fill="#193743" text-anchor="middle">zugeordnet</text>
+<line x1="1222.3046875" y1="309.0" x2="1149.695903097686" y2="240.15611552965774" stroke="#45616C" stroke-width="1.6"/>
+<line x1="1288.90625" y1="309.0" x2="1365.514270448951" y2="238.9583813038162" stroke="#45616C" stroke-width="1.6"/>
+<line x1="1350.0" y1="334.6166666666667" x2="1428.0918157153706" y2="330.191463776129" stroke="#45616C" stroke-width="1.6"/>
+<line x1="1350.0" y1="367.6666666666667" x2="1469.792857230281" y2="402.55370929864324" stroke="#45616C" stroke-width="1.6"/>
+<line x1="1186.6666666666667" y1="371.0" x2="1099.4418952088329" y2="410.5702621735539" stroke="#45616C" stroke-width="1.6"/>
+<line x1="364.7265625" y1="309.0" x2="297.6713108729409" y2="240.3354223338915" stroke="#45616C" stroke-width="1.6"/>
+<line x1="424.0625" y1="309.0" x2="488.7648159853139" y2="239.98419628233188" stroke="#45616C" stroke-width="1.6"/>
+<line x1="1208.9492753623188" y1="741.0" x2="1089.68534531883" y2="821.2849870536656" stroke="#45616C" stroke-width="1.6"/>
+<line x1="1264.5384615384614" y1="741.0" x2="1306.1347443112993" y2="876.187919011723" stroke="#45616C" stroke-width="1.6"/>
+<line x1="1321.0325203252032" y1="741.0" x2="1463.3789984691255" y2="807.8267817240551" stroke="#45616C" stroke-width="1.6"/>
+<line x1="349.94666666666666" y1="741.0" x2="217.1497353491579" y2="832.3740353102124" stroke="#45616C" stroke-width="1.6"/>
+<line x1="409.046875" y1="741.0" x2="468.91770463881176" y2="873.1287274787569" stroke="#45616C" stroke-width="1.6"/>
+<line x1="471.0648148148148" y1="741.0" x2="603.2650980812131" y2="794.8778512934755" stroke="#45616C" stroke-width="1.6"/>
+<rect x="1160.0" y="309.0" width="190" height="62" fill="#DCECEE" stroke="#45616C" stroke-width="1.7" rx="0"/>
+<text x="1255" y="347" font-family="DejaVu Sans, sans-serif" font-size="22" font-weight="bold" fill="#193743" text-anchor="middle">Album</text>
+<ellipse cx="1120" cy="212" rx="124" ry="29" fill="white" stroke="#45616C" stroke-width="1.7"/>
+<text x="1120" y="218" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="middle">TIDAL-Album-ID</text>
+<line x1="1053.25" y1="221" x2="1186.75" y2="221" stroke="#193743" stroke-width="1.15"/>
+<ellipse cx="1395" cy="212" rx="80" ry="29" fill="white" stroke="#45616C" stroke-width="1.7"/>
+<text x="1395" y="218" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="middle">Titel</text>
+<ellipse cx="1555" cy="323" rx="131" ry="29" fill="white" stroke="#45616C" stroke-width="1.7"/>
+<text x="1555" y="329" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="middle">Erscheinungsdatum</text>
+<ellipse cx="1540" cy="423" rx="99" ry="29" fill="white" stroke="#45616C" stroke-width="1.7"/>
+<text x="1540" y="429" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="middle">Cover-URL</text>
+<ellipse cx="1050" cy="433" rx="78" ry="29" fill="white" stroke="#45616C" stroke-width="1.7" stroke-dasharray="7 4"/>
+<text x="1050" y="439" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="middle">Jahr</text>
+<rect x="285.0" y="309.0" width="220" height="62" fill="#DCECEE" stroke="#45616C" stroke-width="1.7" rx="0"/>
+<text x="395" y="347" font-family="DejaVu Sans, sans-serif" font-size="22" font-weight="bold" fill="#193743" text-anchor="middle">Künstler</text>
+<ellipse cx="270" cy="212" rx="130" ry="29" fill="white" stroke="#45616C" stroke-width="1.7"/>
+<text x="270" y="218" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="middle">TIDAL-Künstler-ID</text>
+<line x1="196.078125" y1="221" x2="343.921875" y2="221" stroke="#193743" stroke-width="1.15"/>
+<ellipse cx="515" cy="212" rx="100" ry="29" fill="white" stroke="#45616C" stroke-width="1.7"/>
+<text x="515" y="218" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="middle">TIDAL-Name</text>
+<rect x="1145.0" y="679.0" width="220" height="62" fill="#DCECEE" stroke="#45616C" stroke-width="1.7" rx="0"/>
+<text x="1255" y="717" font-family="DejaVu Sans, sans-serif" font-size="22" font-weight="bold" fill="#193743" text-anchor="middle">Kategorie</text>
+<ellipse cx="1050" cy="848" rx="102" ry="29" fill="white" stroke="#45616C" stroke-width="1.7"/>
+<text x="1050" y="854" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="middle">Kategorie-ID</text>
+<line x1="997.0" y1="857" x2="1103.0" y2="857" stroke="#193743" stroke-width="1.15"/>
+<ellipse cx="1315" cy="905" rx="78" ry="29" fill="white" stroke="#45616C" stroke-width="1.7"/>
+<text x="1315" y="911" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="middle">Name</text>
+<ellipse cx="1517" cy="833" rx="108" ry="29" fill="white" stroke="#45616C" stroke-width="1.7" stroke-dasharray="7 4"/>
+<text x="1517" y="839" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="middle">Albumanzahl</text>
+<rect x="256.0" y="679.0" width="278" height="62" fill="#DCECEE" stroke="#45616C" stroke-width="1.7" rx="0"/>
+<text x="395" y="717" font-family="DejaVu Sans, sans-serif" font-size="22" font-weight="bold" fill="#193743" text-anchor="middle">Künstlerpräferenz</text>
+<ellipse cx="177" cy="860" rx="132" ry="29" fill="white" stroke="#45616C" stroke-width="1.7"/>
+<text x="177" y="866" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="middle">TIDAL-Künstler-ID</text>
+<line x1="103.078125" y1="869" x2="250.921875" y2="869" stroke="#193743" stroke-width="1.15"/>
+<ellipse cx="482" cy="902" rx="139" ry="29" fill="white" stroke="#45616C" stroke-width="1.7"/>
+<text x="482" y="908" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="middle">Eigener Anzeigename</text>
+<ellipse cx="660" cy="818" rx="94" ry="29" fill="white" stroke="#45616C" stroke-width="1.7"/>
+<text x="660" y="824" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="middle">Sortiername</text>
+<rect x="716" y="616" width="265" height="145" fill="#FBF4E8" stroke="#D2B889" stroke-width="1" rx="8"/>
+<text x="734" y="643" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">n:m wird später durch</text>
+<text x="734" y="672" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">category_albums abgebildet.</text>
+<text x="734" y="701" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">Künstlerdaten liegen im</text>
+<text x="734" y="730" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal" fill="#193743" text-anchor="start">Ist-Schema als JSON vor.</text>
+<line x1="45" y1="965" x2="1675" y2="965" stroke="#CCD7DA" stroke-width="1.6"/>
+<text x="46" y="995" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="normal" fill="#52636B" text-anchor="start">Rechteck: Entität · Raute: Beziehung · Ellipse: Attribut · Unterstrichen: Schlüssel · Gestrichelte Ellipse: abgeleitet.</text>
+<text x="46" y="1018" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="normal" fill="#52636B" text-anchor="start">(min,max) gilt je Instanz der angrenzenden Entität. 0 = optional; N = beliebig viele. Breite Linie = vollständige Teilnahme.</text>
+<text x="46" y="1041" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="normal" fill="#52636B" text-anchor="start">Album → Künstler: Minimum 0, weil die App fehlende Metadaten zulässt. Technische Cachefelder und Zeitstempel stehen im Tabellenmodell.</text>
+<line x1="45" y1="1060" x2="1675" y2="1060" stroke="#CCD7DA" stroke-width="1.6"/>
+<text x="45" y="1090" font-family="DejaVu Sans, sans-serif" font-size="14" font-weight="normal" fill="#52636B" text-anchor="start">Leseansicht aus den PlantUML-Quelldaten · Ersatzrenderer, kein nativer PlantUML-Export</text>
+<text x="1675" y="1090" font-family="DejaVu Sans, sans-serif" font-size="14" font-weight="normal" fill="#52636B" text-anchor="end">Tidal2WiiM · Schema 3 · 04.10.2026</text>
+</svg>
