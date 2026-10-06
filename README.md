@@ -10,7 +10,7 @@
 
 Ich höre Musik über TIDAL und einen WiiM Pro -> Fosi Audio ZH3 -> Fosi Audio ZA3. Mit einer wachsenden Albensammlung fehlte mir jedoch eine Möglichkeit, meine Musik so zu ordnen, wie ich es von einem Plattenregal gewohnt bin: nach Künstlern und Bands, mit deren Alben übersichtlich an einem Ort.
 
-TIDAL bietet zwar Playlists, aber keine frei gestaltbare Ordnerstruktur für eine solche Albumverwaltung. Auch die Einbindung in WiiM-App schloss diese Lücke für mich nicht: Sie greift auf die von TIDAL bereitgestellte Bibliothek und deren Metadaten zurück, ergänzt jedoch nicht die gewünschte persönliche Ordnung.
+TIDAL bietet zwar Playlists, aber keine frei gestaltbare Ordnerstruktur für eine solche Albumverwaltung. Auch die Einbindung in die WiiM-App schloss diese Lücke für mich nicht: Sie greift auf die von TIDAL bereitgestellte Bibliothek und deren Metadaten zurück, ergänzt jedoch nicht die gewünschte persönliche Ordnung.
 
 Daraus entstand die Idee zu **Tidal2WiiM als „Missing Link“ zwischen Streaming-Bibliothek und persönlichem Plattenregal**. Die App fasst Alben in Künstler- und Bandordnern zusammen und ergänzt eigene Kategorien sowie individuell anpassbare Anzeige- und Sortiernamen. So lässt sich die Sammlung nach den eigenen Vorstellungen durchstöbern und verwalten – und die ausgewählte Musik anschließend in TIDAL öffnen.
 
