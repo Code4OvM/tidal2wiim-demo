@@ -16,7 +16,7 @@ Daraus entstand die Idee zu **Tidal2WiiM als „Missing Link“ zwischen Streami
 
 Die Entwicklung erfolgte schrittweise mit Unterstützung von ChatGPT (Tests und Fehlersuche): zuerst eine lauffähige Flutter-App auf dem Tablet, dann die TIDAL-Anmeldung und der Zugriff auf die Sammlung. Es folgten Künstlerordner, Kategorien, Albumdetails und die Übergabe an TIDAL. Im praktischen Einsatz kamen weitere Verbesserungen hinzu – etwa lokale Caches, eine dauerhaft gespeicherte Anmeldung und ein eigener Künstlereditor.
 
-Auch optisch sollte sich die App wie eine Musiksammlung anfühlen. So entstanden durch ChatGPT die Startseite mit Plattenspieler und Plattenregal sowie das passende App-Icon. Ein wenig Hi-Fi-Nostalgie gehört schließlich dazu.
+Auch optisch sollte sich die App wie eine Musiksammlung anfühlen. So entstanden durch ChatGPT die Startseite mit Plattenspieler und Plattenregal sowie das passende App-Icon. Ein wenig HiFi-Nostalgie gehört schließlich dazu.
 
 ## Was umgesetzt wurde
 
