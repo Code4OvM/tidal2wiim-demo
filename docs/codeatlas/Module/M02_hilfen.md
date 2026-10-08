@@ -4,7 +4,7 @@
 
 **Quellcode:** [lib/core/hilfen.dart](https://github.com/Code4OvM/tidal2wiim-demo/blob/851304ffd33e6ed9f65d74a29d146311e9a6265b/lib/core/hilfen.dart)
 
-**Aufgabe:** Stellt kleine Hilfsfunktionen ohne eigenen Zustand bereit. Prüft JSON-Strukturen, bereinigt Texte und wandelt ISO-Dauern für die Titelanzeige um.
+**Aufgabe:** Stellt kleine Hilfsfunktionen ohne eigenen Zustand bereit. Prüft JSON-Strukturen, bereinigt Texte und wandelt **Zeitspannen im standardisierten Format nach ISO 8601** – hier beispielsweise die Spieldauer eines Musiktitels – für die Titelanzeige um.
 
 **Eingaben:** Object?, JSON-Werte, Suchtext oder Duration?.
 

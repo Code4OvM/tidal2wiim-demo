@@ -20,7 +20,7 @@
       "id": "M02",
       "path": "lib/core/hilfen.dart",
       "title": "JSON, Suchtext und Zeitdauer aufbereiten",
-      "job": "Stellt kleine Hilfsfunktionen ohne eigenen Zustand bereit. Prüft JSON-Strukturen, bereinigt Texte und wandelt ISO-Dauern für die Titelanzeige um.",
+      "job": "Stellt kleine Hilfsfunktionen ohne eigenen Zustand bereit. Prüft JSON-Strukturen, bereinigt Texte und wandelt **Zeitspannen im standardisierten Format nach ISO 8601** – hier beispielsweise die Spieldauer eines Musiktitels – für die Titelanzeige um.",
       "inputs": "Object?, JSON-Werte, Suchtext oder Duration?.",
       "outputs": "Json, List<Json>, String?, normalisierte Suchtexte sowie Duration? und Anzeigetexte.",
       "partners": "Wird von Modellen, API-Auswertung, Sammlung und Albumdetailseite benutzt. Kein direkter Netz- oder Datenbankzugriff.",
