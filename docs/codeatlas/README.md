@@ -42,3 +42,5 @@ python Modelle_rendern.py /pfad/zu/plantuml.jar
 ```
 
 Die Skripte schreiben nach `SVG/` und `PNG/`. Komponenten- und Klassenmodelle verwenden Smetana. Die vorliegenden Grafiken wurden lokal mit PlantUML 1.2025.10 erzeugt.
+
+**Smetana** ist eine in PlantUML eingebaute Layout-Engine. Sie berechnet die Anordnung der Diagrammelemente und den Verlauf ihrer Verbindungslinien.
