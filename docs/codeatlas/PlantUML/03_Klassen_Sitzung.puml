@@ -1,0 +1,79 @@
+@startuml
+!pragma layout smetana
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam ArrowColor #176C78
+skinparam LineColor #176C78
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #F1F7F8
+skinparam classBorderColor #176C78
+skinparam componentBackgroundColor #F1F7F8
+skinparam componentBorderColor #176C78
+skinparam packageBackgroundColor #F8FAFB
+skinparam packageBorderColor #819BA3
+skinparam NoteBackgroundColor #FFF4DC
+skinparam NoteBorderColor #BC8B39
+skinparam NoteFontSize 15
+skinparam sequenceMessageAlign center
+skinparam sequenceParticipantBackgroundColor #F1F7F8
+skinparam sequenceParticipantBorderColor #176C78
+skinparam sequenceLifeLineBorderColor #819BA3
+skinparam sequenceArrowThickness 1.2
+hide footbox
+title Sitzungsverwaltung und Testbarkeit
+top to bottom direction
+class ChangeNotifier <<Flutter>>
+class TidalAuthService {
+ -_session: TidalSession?
+ -_store: TidalSessionStore
+ -_refreshing: Future<String>?
+ -_storageQueue: Future<void>
+ -_epoch: int
+ +restore(): Future<void>
+ +acceptLogin(session): Future<void>
+ +forget(): Future<void>
+ +accessToken(rejectedToken?): Future<String>
+ +get(client, uri): Future<Response>
+ +epoch: int {readOnly}
+ +storageWarning: String? {readOnly}
+}
+interface TidalSessionStore {
+ +read(): Future<String?>
+ +write(value: String?): Future<void>
+}
+class SecureTidalSessionStore {
+ +read(): Future<String?>
+ +write(value): Future<void>
+}
+class MemorySessionStore <<nur Tests>> {
+ +value: String?
+ +failWrites: bool
+ +writes: int
+}
+class TidalSession {
+ +accessToken: String
+ +refreshToken: String?
+ +expiresAt: DateTime?
+ +usableAt(time): bool
+ +toJson(): Map
+ +fromJson(json): TidalSession
+}
+class "http.Client / Client-Fabrik" as HTTP <<extern>>
+class "DateTime Function()" as CLOCK <<injizierte Uhr>>
+ChangeNotifier <|-- TidalAuthService
+TidalSessionStore <|.. SecureTidalSessionStore
+TidalSessionStore <|.. MemorySessionStore
+TidalAuthService --> "1" TidalSessionStore : Konstruktor / _store
+TidalAuthService --> "0..1" TidalSession : aktueller Token-Satz
+TidalAuthService ..> HTTP : Anfragen
+TidalAuthService ..> CLOCK : Gültigkeit prüfen
+note bottom of TidalAuthService
+ Fehlerklassen: TidalSignInRequired,
+ TidalAuthUnavailable, TidalSessionChanged.
+ notifyListeners() meldet Änderungen an HomePage.
+ Ein laufender Refresh wird von Aufrufern geteilt.
+end note
+@enduml

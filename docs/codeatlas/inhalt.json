@@ -1,0 +1,744 @@
+{
+  "modules": [
+    {
+      "id": "M01",
+      "path": "lib/main.dart",
+      "title": "App starten und Dateien verbinden",
+      "job": "Startet Flutter mit Tidal2WiiMApp. Baut MaterialApp, dunkles Theme und HomePage auf. Verbindet 16 part-Dateien zu einer gemeinsamen Dart-Bibliothek und importiert zwei weitere eigene Bibliotheken.",
+      "inputs": "Optional: bibliothekLaden-Callback und TidalAuthService für isolierte Tests.",
+      "outputs": "Widget-Baum mit HomePage; selbst keine Albumdaten oder SQL-Abfragen.",
+      "partners": "Bindet alle part-Dateien ein; importiert models/kuenstler_sortierung.dart und services/tidal_auth_service.dart.",
+      "symbols": "main(), Tidal2WiiMApp.build()",
+      "lesson": "Die Ordner sind fachliche Bereiche. Technisch ist tidal2wiim ein Dart-Paket mit drei eigenen Bibliotheken.",
+      "diagrams": [
+        "01",
+        "05",
+        "06"
+      ]
+    },
+    {
+      "id": "M02",
+      "path": "lib/core/hilfen.dart",
+      "title": "JSON, Suchtext und Zeitdauer aufbereiten",
+      "job": "Stellt kleine Hilfsfunktionen ohne eigenen Zustand bereit. Prüft JSON-Strukturen, bereinigt Texte und wandelt ISO-Dauern für die Titelanzeige um.",
+      "inputs": "Object?, JSON-Werte, Suchtext oder Duration?.",
+      "outputs": "Json, List<Json>, String?, normalisierte Suchtexte sowie Duration? und Anzeigetexte.",
+      "partners": "Wird von Modellen, API-Auswertung, Sammlung und Albumdetailseite benutzt. Kein direkter Netz- oder Datenbankzugriff.",
+      "symbols": "Json, _objekt(), _optionalObjekt(), _liste(), _text(), _vergleichstext(), _dauerLesen(), _dauerAnzeige()",
+      "lesson": "Ein fehlender optionaler Wert darf null bleiben. Eine falsche Pflichtstruktur wird dagegen als FormatException gemeldet.",
+      "diagrams": [
+        "09",
+        "14"
+      ],
+      "type_note": "`String?` bezeichnet Text oder `null`. `Duration?` bezeichnet eine Zeitdauer oder `null`. Das `?` erlaubt jeweils einen fehlenden Wert."
+    },
+    {
+      "id": "M03",
+      "path": "lib/core/sammlung.dart",
+      "title": "Ansichten aus vorhandenen Alben ableiten",
+      "job": "Filtert und sortiert Alben, bildet Künstlerordner und berechnet den A-Z-Sprungindex. Definiert die Auswahlwerte für Appseite, Sammlungsansicht und Sortierung.",
+      "inputs": "List<Album>, Suchtext, Sortierung und Map<String, KuenstlerEinstellung>.",
+      "outputs": "Gefilterte Albumliste, List<KuenstlerOrdner> oder Map<String, int> als Buchstabenindex.",
+      "partners": "HomePage ruft die Funktionen beim Aufbau der Sammlung auf. Benutzt Fachmodelle und Texthelfer.",
+      "symbols": "Sortierung, SammlungAnsicht, AppSeite, _ansichtErstellen(), _kuenstlerOrdnerErstellen(), _kuenstlerAlphabetIndex()",
+      "lesson": "Künstlerordner entstehen im RAM. Mehrere Künstler eines Albums führen zu mehreren Ordnerzuordnungen. Die Albumsortierung verwendet TIDAL-Künstlernamen; eigene Sortiernamen steuern die Künstlerordner.",
+      "diagrams": [
+        "01",
+        "02"
+      ]
+    },
+    {
+      "id": "M04",
+      "path": "lib/models/modelle.dart",
+      "title": "Gemeinsame Datenobjekte beschreiben",
+      "job": "Definiert acht Fach- und Transportmodelle für Album, Künstler, Kategorie, Einstellungen, Titel, Ordner, API-Seite und lokalen Cache. Album.ausRessourcen() setzt API-Ressourcen zu einem Album zusammen.",
+      "inputs": "Konstruktorwerte; Ressourcenindex nach type:id; SQLite-Map für KuenstlerEinstellung.",
+      "outputs": "Typisierte Dart-Objekte; abgeleitete Werte wie Jahr, Anzeigename und Albumanzahl.",
+      "partners": "Gemeinsame Sprache von HomePage, Detailseiten, SQLite, Sammlung und Coveranzeige.",
+      "symbols": "Album, Kuenstler, Kategorie, KuenstlerEinstellung, KuenstlerOrdner, AlbumTitel, AlbumSeite, LokaleBibliothekCache",
+      "lesson": "Kategorie hält Album-IDs. Album enthält Künstler, aber keine Titelliste. Ein final-Feld macht eine darin referenzierte Liste nicht automatisch unveränderlich.",
+      "diagrams": [
+        "02",
+        "09"
+      ]
+    },
+    {
+      "id": "M05",
+      "path": "lib/models/kuenstler_sortierung.dart",
+      "title": "Änderungen als Entwurf sammeln",
+      "job": "Verwaltet die Ausgangszeilen und noch ungespeicherte Sortiernamen. Erkennt tatsächliche Änderungen und hält Reihenfolge sowie Suchgrundlage während des Tippens stabil.",
+      "inputs": "Iterable<KuenstlerSortierZeile>; Künstler-ID und Eingabetext; Suchtext.",
+      "outputs": "Gefilterte Zeilen, Änderungsanzahl und unveränderliche List<KuenstlerSortierAenderung>.",
+      "partners": "Eigenständige Bibliothek ohne Imports von Flutter, SQLite oder TIDAL. Die Editor-Seite verwendet sie; eigene Unit-Tests prüfen die Logik.",
+      "symbols": "KuenstlerSortierZeile, KuenstlerSortierAenderung, KuenstlerSortierEntwurf; setzen(), filtern(), aenderungen",
+      "lesson": "Rohtext bleibt beim Tippen erhalten. Erst der effektive Speicherwert wird getrimmt; ein leeres Feld fällt auf den ursprünglichen TIDAL-Namen zurück.",
+      "diagrams": [
+        "04",
+        "11"
+      ]
+    },
+    {
+      "id": "M06",
+      "path": "lib/data/lokale_datenbank.dart",
+      "title": "Strukturierte Daten lokal speichern",
+      "job": "Öffnet tidal2wiim.db mit Schema 3 und aktiviert Fremdschlüssel. Kapselt Cache, Künstlerpräferenzen, Kategorien und Albumzuordnungen; übernimmt Migrationen und Transaktionen.",
+      "inputs": "Albumlisten mit Zeitstempel, KuenstlerEinstellung, Kategorienamen sowie Album- und Kategorie-IDs.",
+      "outputs": "Future<LokaleBibliothekCache?>, Einstellungs-Map, Kategorienlisten, ID-Mengen oder Future<void>.",
+      "partners": "HomePage, KategoriePage und AlbumDetailPage nutzen LokaleDatenbank.instance. sqflite führt SQL aus; path bildet den Dateipfad.",
+      "symbols": "LokaleDatenbank, albumCacheLaden(), albumCacheSpeichern(), kategorienLaden(), albumKategorienSetzen()",
+      "lesson": "Cacheaustausch und Zuordnungswechsel sind atomar. Nur category_albums.category_id ist ein SQL-Fremdschlüssel; Künstlerdaten liegen im Cache als JSON vor.",
+      "diagrams": [
+        "01",
+        "08",
+        "12"
+      ]
+    },
+    {
+      "id": "M07",
+      "path": "lib/data/kuenstler_sortierung_speichern.dart",
+      "title": "Sortiernamen gemeinsam in SQLite schreiben",
+      "job": "Ergänzt LokaleDatenbank um die Sammelspeicherung. Prüft IDs vorab und führt alle Änderungen in einer Transaktion aus. Verändert vorhandene eigene Anzeigenamen nicht.",
+      "inputs": "List<KuenstlerSortierAenderung> aus dem Entwurf.",
+      "outputs": "Future<void>; bei Fehlern Exception und Rollback statt eines halben Änderungsstands.",
+      "partners": "HomePage bindet die Extension-Methode als onSpeichern-Callback an die Editor-Seite. Geschrieben wird artist_preferences.",
+      "symbols": "extension KuenstlerSortierungSpeichern on LokaleDatenbank; kuenstlerSortiernamenSpeichern()",
+      "lesson": "Eine Extension ist keine Unterklasse. Beim Zurücksetzen wird ein Präferenzsatz nur gelöscht, wenn kein eigener Anzeigename erhalten werden muss.",
+      "diagrams": [
+        "04",
+        "11"
+      ]
+    },
+    {
+      "id": "M08",
+      "path": "lib/services/tidal_auth_service.dart",
+      "title": "Anmeldung und Token-Lebenszyklus verwalten",
+      "job": "Stellt die gemeinsame Sitzung wieder her, speichert Login-Ergebnisse und erneuert Tokens bei Bedarf. Schützt vor mehrfachen parallelen Refreshs und Ergebnissen einer inzwischen ersetzten Sitzung.",
+      "inputs": "clientId, optionale Store-/Client-/Uhr-Abhängigkeiten; TidalSession beim Login; HTTPS-URI und HTTP-Client beim Lesen.",
+      "outputs": "Future<String> für ein Token, Future<Response> für API-GET, Status-Getter und ChangeNotifier-Benachrichtigungen.",
+      "partners": "HomePage besitzt oder erhält den Dienst und gibt dieselbe Referenz an Unterseiten weiter. SecureTidalSessionStore verwendet flutter_secure_storage.",
+      "symbols": "TidalAuthService, TidalSession, TidalSessionStore, SecureTidalSessionStore; restore(), acceptLogin(), accessToken(), get(), forget()",
+      "lesson": "HTTP 401 führt höchstens zu einem zweiten API-GET. Temporäre Netzfehler erhalten die Sitzung. storageWarning weist auf Probleme beim Lesen, Speichern oder Entfernen der sicheren Sitzung hin.",
+      "diagrams": [
+        "03",
+        "06",
+        "07",
+        "10"
+      ]
+    },
+    {
+      "id": "M09",
+      "path": "lib/services/tidal_api.dart",
+      "title": "API-Aufrufe vereinheitlichen und JSON lesen",
+      "job": "Baut OpenAPI-URLs, ruft den Auth-Dienst auf, prüft HTTP 200 und decodiert JSON. Liest Folgekursor, wählt eine passende Cover-URL und übersetzt Fehler in verständliche Hinweise.",
+      "inputs": "http.Client, gemeinsamer TidalAuthService, Pfadsegmente und Queryparameter; JSON-Ressourcen für Cover und Cursor.",
+      "outputs": "Future<Json>, String? für Cursor/Cover-URL oder ApiFehler.",
+      "partners": "HomePage und AlbumDetailPage nutzen _apiLesen(). Album.ausRessourcen() nutzt _coverUrlLesen().",
+      "symbols": "_apiLesen(), _cursorLesen(), _coverUrlLesen(), _fehlerText(), ApiFehler",
+      "lesson": "Die Datei ist überwiegend eine Funktionssammlung, keine TidalApi-Klasse. Jeder Aufruf wartet vor der Anfrage 300 ms; das ist kein vollständiger automatischer 429-Retry.",
+      "diagrams": [
+        "01",
+        "09",
+        "10"
+      ]
+    },
+    {
+      "id": "M10",
+      "path": "lib/services/cover_cache.dart",
+      "title": "Albumcover als Dateien zwischenspeichern",
+      "job": "Findet oder lädt Coverdateien im lokalen cover_cache-Verzeichnis. Bündelt laufende Downloads für denselben Zielpfad, schreibt zunächst .tmp und räumt beim Abgleich überholte Dateien auf.",
+      "inputs": "Album mit ID und Cover-URL oder List<Album> zum Vorladen; optionaler HTTP-Client.",
+      "outputs": "Future<File?> für ein Cover oder Future<void> nach synchronisieren().",
+      "partners": "AlbumCover fragt einzelne Dateien an. HomePage startet das Vorladen nach Cacheübernahme oder vollständiger Aktualisierung.",
+      "symbols": "LokalerCoverCache.instance, dateiFuer(), synchronisieren(), _herunterladen()",
+      "lesson": "Bis zu vier Worker gelten für synchronisieren(), nicht als globale Grenze aller Einzelabrufe. Bildbytes liegen im Dateisystem und nie als BLOB in SQLite.",
+      "diagrams": [
+        "01",
+        "06",
+        "13"
+      ]
+    },
+    {
+      "id": "M11",
+      "path": "lib/pages/home_page.dart",
+      "title": "Appzustand und Abläufe koordinieren",
+      "job": "Das zentrale StatefulWidget HomePage und sein Zustand _HomePageState verwalten Startansicht, Labor und Sammlung. Sie koordinieren Login, Cache, API-Seiten, Hintergrundabgleich, Suche, Künstlerordner, Kategorien und Navigation zum Sortiernameneditor.",
+      "inputs": "Optionale Test-Abhängigkeiten, Nutzeraktionen, Dienstmeldungen, API- und Datenbankergebnisse.",
+      "outputs": "Aktueller UI-Zustand; Daten und AuthService an Unterseiten; Callbacks zum Neuladen.",
+      "partners": "Zentraler Auftraggeber für Datenbank, Auth, API und Covercache. Baut StartPage; öffnet Künstler-, Kategorie-, Album- und Editor-Seiten.",
+      "symbols": "HomePage, _HomePageState; _initialisieren(), _seiteLesen(), _albenLaden(), _bibliothekImHintergrundAktualisieren(), _kuenstlerSortiernamenOeffnen()",
+      "lesson": "Die Aufteilung in Dateien trennt noch nicht sämtliche UI- und Fachlogik. Labor und Sammlung sind hier Widget-Methoden, keine eigenen Seitenklassen.",
+      "diagrams": [
+        "01",
+        "05",
+        "06",
+        "08",
+        "09",
+        "11"
+      ]
+    },
+    {
+      "id": "M12",
+      "path": "lib/pages/start_page.dart",
+      "title": "Startbild mit echten Bedienelementen verbinden",
+      "job": "Zeigt die Startgrafik, dynamische Albumzahl und Statusleiste. Skaliert Bild, Texte und Trefferflächen gemeinsam und löst vier vom Elternwidget bereitgestellte Aktionen aus.",
+      "inputs": "Albumanzahl, Sitzung-/Ladeflags, Aktualisierungszeit sowie vier Callbacks.",
+      "outputs": "Aufrufe von onSammlungOeffnen, onLaborOeffnen, onAktualisieren und onTidalStatus.",
+      "partners": "Wird von HomePage konfiguriert. _StartAktion, _StartStatusLeiste und zwei CustomPainter bilden interne UI-Bausteine.",
+      "symbols": "StartPage, _StartAktion, _StartStatusLeiste, _StartTidalZeichen, _StartBibliothekZeichen",
+      "lesson": "StartPage liest selbst weder SQLite noch die API. Sie zeigt den gelieferten Zustand und delegiert Aktionen zurück an HomePage.",
+      "diagrams": [
+        "05",
+        "06"
+      ]
+    },
+    {
+      "id": "M13",
+      "path": "lib/pages/album_detail_page.dart",
+      "title": "Album, Titel und lokale Zuordnungen anzeigen",
+      "job": "Lädt die Titelliste aus TIDAL und Kategorien aus SQLite unabhängig voneinander. Ermöglicht Kategoriezuordnung und öffnet Album-, Track- oder Videolinks extern.",
+      "inputs": "Album, gemeinsamer AuthService, optionales Land sowie Callbacks für Anmeldung und Kategorieänderungen.",
+      "outputs": "List<AlbumTitel> im Seitenzustand, lokale Kategorieauswahl und externe URLs; Rückmeldung nach gespeicherter Zuordnung.",
+      "partners": "Aufruf durch HomePage oder AlbumGrid; nutzt _apiLesen(), LokaleDatenbank, AlbumCover und Dialoge.",
+      "symbols": "AlbumDetailPage, _AlbumDetailPageState; _titelLaden(), _kategorienBearbeiten(), _inTidalOeffnen(), _titelInTidalOeffnen()",
+      "lesson": "Die Titelliste wird nicht dauerhaft gecacht. launchUrl() startet einen externen Handler; Play und WiiM-Auswahl erfolgen anschließend außerhalb unserer App.",
+      "diagrams": [
+        "05",
+        "12",
+        "14"
+      ]
+    },
+    {
+      "id": "M14",
+      "path": "lib/pages/kuenstler_page.dart",
+      "title": "Alben eines Künstlerordners darstellen",
+      "job": "Ist eine kleine, zustandslose Hülle: Zeigt den Anzeigenamen als Seitentitel und übergibt die zugehörigen Alben an AlbumGrid.",
+      "inputs": "KuenstlerOrdner, AuthService, optionales Land und Änderungs-/Anmelde-Callbacks.",
+      "outputs": "Widget-Baum aus AppBar und AlbumGrid.",
+      "partners": "HomePage erstellt den Ordner zuvor mit _kuenstlerOrdnerErstellen(). AlbumGrid übernimmt die Detailnavigation.",
+      "symbols": "KuenstlerPage.build()",
+      "lesson": "Die Seite legt keine Ordner an und fragt keine Künstlerdaten nach. Sie erhält bereits aufbereitete Objekte.",
+      "diagrams": [
+        "02",
+        "05"
+      ]
+    },
+    {
+      "id": "M15",
+      "path": "lib/pages/kategorie_page.dart",
+      "title": "Gespeicherte Zuordnung mit geladenen Alben verbinden",
+      "job": "Liest die Kategorie samt Album-IDs und filtert die übergebene Albumliste. Zeigt sowohl sichtbare Alben als auch die Zahl gespeicherter Zuordnungen.",
+      "inputs": "Kategorie-ID/-Name, alle aktuell geladenen Alben, AuthService und Callbacks.",
+      "outputs": "Nach Jahr und Titel sortierte List<Album> für AlbumGrid; Aktualisierung nach Kategorieänderungen.",
+      "partners": "Nutzt LokaleDatenbank.kategorienLaden(); AlbumGrid öffnet Details. Der Callback lädt zunächst diese Seite und danach die Elternansicht neu.",
+      "symbols": "KategoriePage, _KategoriePageState; _neuLaden()",
+      "lesson": "Eine gespeicherte Album-ID muss nicht mehr im aktuellen Cache liegen. Deshalb können Gesamtzahl und sichtbare Anzahl voneinander abweichen.",
+      "diagrams": [
+        "05",
+        "12"
+      ]
+    },
+    {
+      "id": "M16",
+      "path": "lib/pages/kuenstler_sortiernamen_page.dart",
+      "title": "Mehrere Sortiernamen bequem bearbeiten",
+      "job": "Stellt Suche, Eingabefelder, Änderungszähler und Speichern bereit. Verwaltet Controller, Fokuswechsel und Schutz vor dem Verlassen mit ungespeicherten Änderungen.",
+      "inputs": "List<KuenstlerSortierZeile> und onSpeichern-Callback.",
+      "outputs": "Änderungsliste an den Callback; Navigator-Ergebnis true nach erfolgreichem Speichern. Bei Abbruch kein true.",
+      "partners": "HomePage liefert Zeilen und Speicherfunktion. KuenstlerSortierEntwurf hält die Fachlogik getrennt von Flutter.",
+      "symbols": "KuenstlerSortiernamenPage, _KuenstlerSortiernamenPageState; _speichern(), _verlassen(), _fokusVerschieben()",
+      "lesson": "Bei einem Speicherfehler bleiben die Eingaben auf der Seite. Während des Speicherns sind Bearbeitung und unbeabsichtigtes Schließen gesperrt.",
+      "diagrams": [
+        "04",
+        "11"
+      ]
+    },
+    {
+      "id": "M17",
+      "path": "lib/widgets/album_grid.dart",
+      "title": "Wiederverwendbares Raster für Unterseiten",
+      "job": "Zeigt Albumkarten mit Cover, Titel, Künstlern und Jahr. Öffnet beim Antippen eine AlbumDetailPage mit denselben Diensten und Callbacks.",
+      "inputs": "List<Album>, AuthService, optionales Land und zwei Callbacks.",
+      "outputs": "Albumraster und Navigation zur Detailseite.",
+      "partners": "Wird von KuenstlerPage und KategoriePage verwendet; baut AlbumCover. Die Hauptsammlung hat derzeit ein eigenes Raster in HomePage.",
+      "symbols": "AlbumGrid.build()",
+      "lesson": "Wiederverwendung ist hier konkret sichtbar. Es wäre ungenau zu behaupten, dass bereits jedes Raster der App dieses Widget nutzt.",
+      "diagrams": [
+        "05",
+        "14"
+      ]
+    },
+    {
+      "id": "M18",
+      "path": "lib/widgets/album_cover.dart",
+      "title": "Coverdatei laden und Bildfehler abfangen",
+      "job": "Fordert ein Cover vom Dateicache an und zeigt Ladeanzeige, Datei oder Netzbild. Bei fehlender URL bzw. erfolglosem Netzbild erscheint ein Platzhalter.",
+      "inputs": "Album; beim Widget-Update werden geänderte ID oder Cover-URL erkannt.",
+      "outputs": "Bilddarstellung mit FutureBuilder; kein geändertes Albumobjekt.",
+      "partners": "Verwendet LokalerCoverCache.dateiFuer(), Image.file und als Ersatz Image.network. Eingesetzt in Hauptsammlung, AlbumGrid und Detailseite.",
+      "symbols": "AlbumCover, _AlbumCoverState; initState(), didUpdateWidget(), _netzFallback()",
+      "lesson": "Ein vorhandener Dateipfad garantiert noch kein decodierbares Bild. Darum besitzt auch Image.file eine Fehlerbehandlung.",
+      "diagrams": [
+        "13"
+      ]
+    },
+    {
+      "id": "M19",
+      "path": "lib/widgets/dialoge.dart",
+      "title": "Eingaben sammeln und Ergebnisse zurückgeben",
+      "job": "Bündelt drei zustandsbehaftete Dialoge: Kategoriename, einzelne Künstleranpassung und Album-Kategorienauswahl. Jeder Dialog besitzt seine Eingabecontroller bzw. Auswahlkopie.",
+      "inputs": "Dialogtitel/Startname, Künstlerdaten bzw. Kategorien mit ausgewählten IDs.",
+      "outputs": "String, _KuenstlerDialogErgebnis oder Set<int> über Navigator.pop(); bei Abbruch null.",
+      "partners": "HomePage und AlbumDetailPage öffnen die Dialoge und speichern anschließend selbst in SQLite.",
+      "symbols": "_KategorieNameDialog, _KuenstlerBearbeitenDialog, _AlbumKategorienDialog, _KuenstlerDialogErgebnis; jeweilige State-Klassen",
+      "lesson": "Die Dialoge führen keine SQL-Operationen aus. Controller werden in dispose() ihres eigenen Dialogzustands freigegeben.",
+      "diagrams": [
+        "12"
+      ]
+    }
+  ],
+  "dependencies": [
+    [
+      "flutter",
+      "SDK",
+      "Widgets, MaterialApp, Navigator, setState, ChangeNotifier und Lebenszyklus."
+    ],
+    [
+      "flutter_appauth",
+      "12.1.0",
+      "Interaktive TIDAL-Anmeldung; liefert den ersten Token-Satz an HomePage."
+    ],
+    [
+      "http",
+      "1.6.0",
+      "OpenAPI-GET, Token-POST und Coverdownload; austauschbare Clients ermöglichen Tests."
+    ],
+    [
+      "sqflite",
+      "2.4.4",
+      "SQLite-Abfragen, Migrationen und Transaktionen auf dem Gerät."
+    ],
+    [
+      "path",
+      "1.9.1",
+      "Plattformgerechtes Verbinden von Datenbank- und Coverpfaden."
+    ],
+    [
+      "flutter_secure_storage",
+      "11.2.0",
+      "Sicherer Plattform-Speicher für das JSON-Tokenpaket."
+    ],
+    [
+      "url_launcher",
+      "6.3.2",
+      "Album-, Track- und Videolinks an eine externe Anwendung übergeben."
+    ],
+    [
+      "cupertino_icons",
+      "1.0.9",
+      "Im Projekt deklariert; im untersuchten lib-Code kein CupertinoIcons-Aufruf."
+    ],
+    [
+      "flutter_test",
+      "SDK",
+      "Unit-/Widget-Tests, WidgetTester und Flutter-Testumgebung."
+    ],
+    [
+      "flutter_lints",
+      "6.0.0",
+      "Statische Stil-/Analyse-Regeln über analysis_options.yaml; kein Laufzeitdienst."
+    ],
+    [
+      "flutter_launcher_icons",
+      "0.14.4",
+      "Entwicklungswerkzeug zum Erzeugen der App-Icons; kein Laufzeitdienst."
+    ]
+  ],
+  "tests": [
+    [
+      "test/kuenstler_sortierung_test.dart",
+      "Entwurfslogik",
+      "Nur geänderte IDs, Leerwert-Rückfall, stabile Filter/Reihenfolge, getrennte IDs trotz gleicher Namen und ungültige Eingaben."
+    ],
+    [
+      "test/kuenstler_sortiernamen_page_test.dart",
+      "Editor-Oberfläche",
+      "Speichern/Abbrechen, Android-Zurück, Speicherfehler, erhaltene Eingaben, Tastaturfokus und verschiedene Bildschirm-/Textgrößen."
+    ],
+    [
+      "test/tidal_auth_service_test.dart",
+      "Sitzungsdienst",
+      "Wiederherstellung, Ablaufzeit, gemeinsamer Refresh, Netz-/Serverfehler, invalid_grant, Speicherwarnung und genau ein 401-Retry."
+    ],
+    [
+      "test/widget_test.dart",
+      "Start/Labor",
+      "Startaktionen und Trefferflächen, dynamische Statuswerte, Wiederherstellung/Anmeldung vergessen und Layoutvarianten."
+    ],
+    [
+      "test/support/memory_session_store.dart",
+      "Test-Doppel",
+      "MemorySessionStore speichert nur im RAM, zählt Schreibvorgänge und simuliert Schreibfehler; kein eigenständiger Testfall."
+    ]
+  ],
+  "contracts": [
+    [
+      "API → _apiLesen()",
+      "HTTP-Response / UTF-8 JSON",
+      "HTTP 200 wird geprüft; Ergebnis ist Json = Map<String, dynamic>."
+    ],
+    [
+      "JSON → Album",
+      "Map<String, Json> nach type:id",
+      "Sammlungs-IDs werden mit Album-, Künstler- und Coverressourcen aufgelöst."
+    ],
+    [
+      "Seitenlader → Home",
+      "AlbumSeite",
+      "Enthält List<Album> und nächsten Sammlungs-Cursor, nicht die komplette Bibliothek."
+    ],
+    [
+      "SQLite → Home",
+      "LokaleBibliothekCache?",
+      "Albumliste und Speicherzeit; eine leere Tabelle ergibt null."
+    ],
+    [
+      "Home → Unterseite",
+      "Objekte und Referenzen",
+      "Album/Ordner/Listen plus dieselbe TidalAuthService-Instanz; kein kopierter Token."
+    ],
+    [
+      "Dialog → Aufrufer",
+      "String / Set<int> / Ergebnisobjekt",
+      "Navigator.pop liefert ein späteres Ergebnis; null bedeutet meist Abbruch."
+    ],
+    [
+      "Editor → Speicherfunktion",
+      "List<KuenstlerSortierAenderung>",
+      "Nur tatsächlich geänderte Künstler; nach Erfolg pop(true) an Home."
+    ],
+    [
+      "Detailseite → Elternansicht",
+      "Future<void> Function()",
+      "onKategorienGeaendert meldet die Änderung ohne Datensatzpayload; Eltern lesen erneut."
+    ],
+    [
+      "Auth → Home",
+      "ChangeNotifier",
+      "Listener liest Status-Getter neu und ruft setState; kein Ereignisbus für die ganze App."
+    ],
+    [
+      "Covercache → Widget",
+      "Future<File?>",
+      "Bildbytes bleiben im Dateisystem. null/Dateifehler führt zum Netz-Fallback."
+    ],
+    [
+      "App → TIDAL-App",
+      "HTTPS-URL",
+      "Nur Inhalts-ID im Link; weder OAuth-Token noch Musikdatei werden übergeben."
+    ]
+  ],
+  "storage": [
+    [
+      "Arbeitsspeicher",
+      "Alben, gefilterte Ansichten, geladene Titel, Editorentwurf",
+      "Geht beim Prozessende verloren; setState aktualisiert nur die Oberfläche."
+    ],
+    [
+      "SQLite / tidal2wiim.db",
+      "Kategorien, Albumzuordnungen, Künstlerpräferenzen, Metadatencache",
+      "Dauerhaft im App-Bereich. Schema 3; keine Audiostreams und keine Token."
+    ],
+    [
+      "Dateien / cover_cache",
+      "Heruntergeladene Cover als .img; vorläufig .tmp",
+      "Dateiname aus bereinigter Album-ID und stabilem URL-Hash; später erneut ladbar."
+    ],
+    [
+      "Sicherer Store",
+      "Version, clientId, Access-/Refresh-Token und Ablaufzeit als JSON",
+      "Gekapselt durch TidalSessionStore; nicht in SQLite oder Coverdateien."
+    ]
+  ],
+  "checks": [],
+  "classes": [
+    {
+      "name": "LokaleDatenbank",
+      "declaration": "class LokaleDatenbank",
+      "path": "lib/data/lokale_datenbank.dart",
+      "role": "SQLite-Zugriffe und Schema 3."
+    },
+    {
+      "name": "Tidal2WiiMApp",
+      "declaration": "class Tidal2WiiMApp extends StatelessWidget",
+      "path": "lib/main.dart",
+      "role": "Wurzelwidget, Theme und HomePage."
+    },
+    {
+      "name": "KuenstlerSortierZeile",
+      "declaration": "class KuenstlerSortierZeile",
+      "path": "lib/models/kuenstler_sortierung.dart",
+      "role": "Unveränderte Ausgangsdaten einer Editorzeile."
+    },
+    {
+      "name": "KuenstlerSortierAenderung",
+      "declaration": "class KuenstlerSortierAenderung",
+      "path": "lib/models/kuenstler_sortierung.dart",
+      "role": "Datenträger für eine bestätigte Sortieränderung."
+    },
+    {
+      "name": "KuenstlerSortierEntwurf",
+      "declaration": "class KuenstlerSortierEntwurf",
+      "path": "lib/models/kuenstler_sortierung.dart",
+      "role": "Arbeitsspeicher für Eingaben, Filter und Änderungserkennung."
+    },
+    {
+      "name": "KuenstlerEinstellung",
+      "declaration": "class KuenstlerEinstellung",
+      "path": "lib/models/modelle.dart",
+      "role": "Eigener Anzeigename und lokaler Sortiername."
+    },
+    {
+      "name": "Kategorie",
+      "declaration": "class Kategorie",
+      "path": "lib/models/modelle.dart",
+      "role": "Kategorie-ID, Name und Menge von Album-IDs."
+    },
+    {
+      "name": "Kuenstler",
+      "declaration": "class Kuenstler",
+      "path": "lib/models/modelle.dart",
+      "role": "TIDAL-Künstler-ID und Name."
+    },
+    {
+      "name": "Album",
+      "declaration": "class Album",
+      "path": "lib/models/modelle.dart",
+      "role": "Album-Metadaten und beteiligte Künstler."
+    },
+    {
+      "name": "LokaleBibliothekCache",
+      "declaration": "class LokaleBibliothekCache",
+      "path": "lib/models/modelle.dart",
+      "role": "Geladene Albumliste mit Speicherzeit."
+    },
+    {
+      "name": "AlbumTitel",
+      "declaration": "class AlbumTitel",
+      "path": "lib/models/modelle.dart",
+      "role": "Ein Track oder Video im Zustand der Detailseite."
+    },
+    {
+      "name": "KuenstlerOrdner",
+      "declaration": "class KuenstlerOrdner",
+      "path": "lib/models/modelle.dart",
+      "role": "Aus Alben abgeleitete Künstleransicht."
+    },
+    {
+      "name": "AlbumSeite",
+      "declaration": "class AlbumSeite",
+      "path": "lib/models/modelle.dart",
+      "role": "Ergebnis einer API-Sammlungsseite mit Folgekursor."
+    },
+    {
+      "name": "AlbumDetailPage",
+      "declaration": "class AlbumDetailPage extends StatefulWidget",
+      "path": "lib/pages/album_detail_page.dart",
+      "role": "Konfiguration für ein ausgewähltes Album."
+    },
+    {
+      "name": "_AlbumDetailPageState",
+      "declaration": "class _AlbumDetailPageState extends State<AlbumDetailPage>",
+      "path": "lib/pages/album_detail_page.dart",
+      "role": "Titelliste, Kategorien und externe Übergabe."
+    },
+    {
+      "name": "HomePage",
+      "declaration": "class HomePage extends StatefulWidget",
+      "path": "lib/pages/home_page.dart",
+      "role": "Konfiguration der Hauptseite und optionale Test-Abhängigkeiten."
+    },
+    {
+      "name": "_HomePageState",
+      "declaration": "class _HomePageState extends State<HomePage> with WidgetsBindingObserver",
+      "path": "lib/pages/home_page.dart",
+      "role": "Zentrale Koordination von Zustand, Datenladen und Navigation."
+    },
+    {
+      "name": "KategoriePage",
+      "declaration": "class KategoriePage extends StatefulWidget",
+      "path": "lib/pages/kategorie_page.dart",
+      "role": "Konfiguration einer Kategorieansicht."
+    },
+    {
+      "name": "_KategoriePageState",
+      "declaration": "class _KategoriePageState extends State<KategoriePage>",
+      "path": "lib/pages/kategorie_page.dart",
+      "role": "Kategorie lesen, aktuelle Albumobjekte filtern, Anzeige erneuern."
+    },
+    {
+      "name": "KuenstlerPage",
+      "declaration": "class KuenstlerPage extends StatelessWidget",
+      "path": "lib/pages/kuenstler_page.dart",
+      "role": "Künstlerüberschrift und gemeinsames Albumraster."
+    },
+    {
+      "name": "KuenstlerSortiernamenPage",
+      "declaration": "class KuenstlerSortiernamenPage extends StatefulWidget",
+      "path": "lib/pages/kuenstler_sortiernamen_page.dart",
+      "role": "Konfiguration des Editors und Speicher-Callback."
+    },
+    {
+      "name": "_KuenstlerSortiernamenPageState",
+      "declaration": "class _KuenstlerSortiernamenPageState extends State<KuenstlerSortiernamenPage>",
+      "path": "lib/pages/kuenstler_sortiernamen_page.dart",
+      "role": "Entwurf, Eingabefelder, Fokus und Abbruch-/Speicherablauf."
+    },
+    {
+      "name": "StartPage",
+      "declaration": "class StartPage extends StatelessWidget",
+      "path": "lib/pages/start_page.dart",
+      "role": "Startmotiv und vom Elternwidget gelieferte Statusdaten."
+    },
+    {
+      "name": "_StartAktion",
+      "declaration": "class _StartAktion extends StatelessWidget",
+      "path": "lib/pages/start_page.dart",
+      "role": "Beschriftete, tatsächlich antippbare Trefferfläche."
+    },
+    {
+      "name": "_StartStatusLeiste",
+      "declaration": "class _StartStatusLeiste extends StatelessWidget",
+      "path": "lib/pages/start_page.dart",
+      "role": "Album-/TIDAL-Status und Aktualisierungsaktion."
+    },
+    {
+      "name": "_StartTidalZeichen",
+      "declaration": "class _StartTidalZeichen extends CustomPainter",
+      "path": "lib/pages/start_page.dart",
+      "role": "Zeichnet das Statussymbol als CustomPainter."
+    },
+    {
+      "name": "_StartBibliothekZeichen",
+      "declaration": "class _StartBibliothekZeichen extends CustomPainter",
+      "path": "lib/pages/start_page.dart",
+      "role": "Zeichnet das Bibliothekssymbol als CustomPainter."
+    },
+    {
+      "name": "LokalerCoverCache",
+      "declaration": "class LokalerCoverCache",
+      "path": "lib/services/cover_cache.dart",
+      "role": "Dateisuche, Download, Vorladen und Bereinigung der Cover."
+    },
+    {
+      "name": "ApiFehler",
+      "declaration": "class ApiFehler implements Exception",
+      "path": "lib/services/tidal_api.dart",
+      "role": "HTTP-Status und API-Pfad als Fehlerobjekt."
+    },
+    {
+      "name": "TidalSessionStore",
+      "declaration": "abstract interface class TidalSessionStore",
+      "path": "lib/services/tidal_auth_service.dart",
+      "role": "Interface zum Lesen/Schreiben des Session-Pakets."
+    },
+    {
+      "name": "SecureTidalSessionStore",
+      "declaration": "class SecureTidalSessionStore implements TidalSessionStore",
+      "path": "lib/services/tidal_auth_service.dart",
+      "role": "Produktiver Store auf Basis von flutter_secure_storage."
+    },
+    {
+      "name": "TidalSession",
+      "declaration": "class TidalSession",
+      "path": "lib/services/tidal_auth_service.dart",
+      "role": "Token-Satz und Ablaufzeit."
+    },
+    {
+      "name": "TidalSignInRequired",
+      "declaration": "class TidalSignInRequired implements Exception",
+      "path": "lib/services/tidal_auth_service.dart",
+      "role": "Eine neue Anmeldung ist erforderlich."
+    },
+    {
+      "name": "TidalAuthUnavailable",
+      "declaration": "class TidalAuthUnavailable implements Exception",
+      "path": "lib/services/tidal_auth_service.dart",
+      "role": "Vorübergehender Zugangsfehler ohne automatisches Verwerfen der Sitzung."
+    },
+    {
+      "name": "TidalSessionChanged",
+      "declaration": "class TidalSessionChanged implements Exception",
+      "path": "lib/services/tidal_auth_service.dart",
+      "role": "Ein laufender Vorgang gehört nicht mehr zur aktuellen Sitzung."
+    },
+    {
+      "name": "TidalAuthService",
+      "declaration": "class TidalAuthService extends ChangeNotifier",
+      "path": "lib/services/tidal_auth_service.dart",
+      "role": "Gemeinsame Sitzung, Token-Erneuerung, gesicherte API-GETs."
+    },
+    {
+      "name": "AlbumCover",
+      "declaration": "class AlbumCover extends StatefulWidget",
+      "path": "lib/widgets/album_cover.dart",
+      "role": "Konfiguration der Coveranzeige für ein Album."
+    },
+    {
+      "name": "_AlbumCoverState",
+      "declaration": "class _AlbumCoverState extends State<AlbumCover>",
+      "path": "lib/widgets/album_cover.dart",
+      "role": "Datei-Future, Ladeanzeige und Bild-Fallback."
+    },
+    {
+      "name": "AlbumGrid",
+      "declaration": "class AlbumGrid extends StatelessWidget",
+      "path": "lib/widgets/album_grid.dart",
+      "role": "Gemeinsames Raster für Künstler-/Kategorie-Unterseiten."
+    },
+    {
+      "name": "_KategorieNameDialog",
+      "declaration": "class _KategorieNameDialog extends StatefulWidget",
+      "path": "lib/widgets/dialoge.dart",
+      "role": "Konfiguration des Kategorienamen-Dialogs."
+    },
+    {
+      "name": "_KategorieNameDialogState",
+      "declaration": "class _KategorieNameDialogState extends State<_KategorieNameDialog>",
+      "path": "lib/widgets/dialoge.dart",
+      "role": "Textcontroller, Pflichtfeldprüfung und Namensrückgabe."
+    },
+    {
+      "name": "_KuenstlerDialogErgebnis",
+      "declaration": "class _KuenstlerDialogErgebnis",
+      "path": "lib/widgets/dialoge.dart",
+      "role": "Einstellung oder ausdrücklicher Zurücksetzen-Wunsch."
+    },
+    {
+      "name": "_KuenstlerBearbeitenDialog",
+      "declaration": "class _KuenstlerBearbeitenDialog extends StatefulWidget",
+      "path": "lib/widgets/dialoge.dart",
+      "role": "Konfiguration der einzelnen Künstleranpassung."
+    },
+    {
+      "name": "_KuenstlerBearbeitenDialogState",
+      "declaration": "class _KuenstlerBearbeitenDialogState\n    extends State<_KuenstlerBearbeitenDialog>",
+      "path": "lib/widgets/dialoge.dart",
+      "role": "Controller für Anzeige-/Sortiername und Ergebnisrückgabe."
+    },
+    {
+      "name": "_AlbumKategorienDialog",
+      "declaration": "class _AlbumKategorienDialog extends StatefulWidget",
+      "path": "lib/widgets/dialoge.dart",
+      "role": "Konfiguration der Kategorieauswahl."
+    },
+    {
+      "name": "_AlbumKategorienDialogState",
+      "declaration": "class _AlbumKategorienDialogState extends State<_AlbumKategorienDialog>",
+      "path": "lib/widgets/dialoge.dart",
+      "role": "Bearbeitet eine Kopie der ausgewählten IDs."
+    }
+  ],
+  "source_commit": "a8aa3cf959fd88398ef2d30472ceadc865e9cb94",
+  "demo_commit": "851304ffd33e6ed9f65d74a29d146311e9a6265b",
+  "code_url": "https://github.com/Code4OvM/tidal2wiim-demo/blob/851304ffd33e6ed9f65d74a29d146311e9a6265b/"
+}

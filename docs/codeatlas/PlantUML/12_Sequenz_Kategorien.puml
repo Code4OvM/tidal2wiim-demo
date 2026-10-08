@@ -1,0 +1,56 @@
+@startuml
+autonumber
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam ArrowColor #176C78
+skinparam LineColor #176C78
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #F1F7F8
+skinparam classBorderColor #176C78
+skinparam componentBackgroundColor #F1F7F8
+skinparam componentBorderColor #176C78
+skinparam packageBackgroundColor #F8FAFB
+skinparam packageBorderColor #819BA3
+skinparam NoteBackgroundColor #FFF4DC
+skinparam NoteBorderColor #BC8B39
+skinparam NoteFontSize 15
+skinparam sequenceMessageAlign center
+skinparam sequenceParticipantBackgroundColor #F1F7F8
+skinparam sequenceParticipantBorderColor #176C78
+skinparam sequenceLifeLineBorderColor #819BA3
+skinparam sequenceArrowThickness 1.2
+hide footbox
+title Ein Album mehreren Kategorien zuordnen
+actor Nutzer as U
+participant "AlbumDetailPage\nState" as D
+participant "_AlbumKategorienDialog" as W
+participant "LokaleDatenbank" as DB
+participant "Elternansicht\nCallback" as P
+U -> D : Kategorien zuordnen
+D -> DB : kategorienLaden()\nkategorieIdsFuerAlbum(album.id)
+DB --> D : List<Kategorie> + Set<int>
+alt mindestens eine Kategorie vorhanden
+ D -> W : Dialog mit Kategorien und Auswahl
+ W -> W : Set<int>.from(auswahl)\nlokale Arbeitskopie
+ U -> W : Auswahl ändern und speichern
+ W --> D : Set<int> gewählter Kategorie-IDs
+ D -> DB : albumKategorienSetzen(album.id, auswahl)
+ DB -> DB : Transaktion: alte Paare löschen\nneue category_id/album_id-Paare einfügen
+ DB --> D : abgeschlossen
+ D -> DB : Kategorien + Albumzuordnung erneut lesen
+ DB --> D : aktualisierter Stand
+ D -> P : onKategorienGeaendert()
+ P -> DB : Elternansicht lädt Kategorien erneut
+ DB --> P : neue Anzahl / Zuordnung
+else keine Kategorie vorhanden
+ D --> U : zuerst Kategorie anlegen
+end
+note over D,DB
+ Abbruch des Dialogs liefert null: kein Schreiben.
+ Albumdaten und TIDAL-Favoriten bleiben unverändert.
+ Kategorie-IDs sind int; TIDAL-Album-IDs sind String.
+end note
+@enduml

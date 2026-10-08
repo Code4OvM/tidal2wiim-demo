@@ -1,0 +1,64 @@
+@startuml
+autonumber
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam ArrowColor #176C78
+skinparam LineColor #176C78
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #F1F7F8
+skinparam classBorderColor #176C78
+skinparam componentBackgroundColor #F1F7F8
+skinparam componentBorderColor #176C78
+skinparam packageBackgroundColor #F8FAFB
+skinparam packageBorderColor #819BA3
+skinparam NoteBackgroundColor #FFF4DC
+skinparam NoteBorderColor #BC8B39
+skinparam NoteFontSize 15
+skinparam sequenceMessageAlign center
+skinparam sequenceParticipantBackgroundColor #F1F7F8
+skinparam sequenceParticipantBorderColor #176C78
+skinparam sequenceLifeLineBorderColor #819BA3
+skinparam sequenceArrowThickness 1.2
+hide footbox
+title Coveranzeige: Datei, Download und Ersatzanzeige
+participant "AlbumCover\nState" as W
+participant "LokalerCoverCache" as C
+participant "Dateisystem" as F
+participant "Cover-Host" as N
+W -> C : dateiFuer(album)
+C -> C : HTTPS-URL prüfen\nDateiname aus Album-ID + URL-Hash
+C -> F : exists() / length()
+alt vorhandene Datei mit Inhalt
+ F --> C : File
+else Datei fehlt oder ist leer
+ alt Download für denselben Pfad läuft
+  C -> C : vorhandenes Future<File?> verwenden
+ else neuer Download
+  C -> N : GET Bild-URL, Timeout 20 s
+  N --> C : Status, Header, Bildbytes
+  alt brauchbare Antwort
+   C -> F : .tmp schreiben; danach zu .img umbenennen
+   F --> C : File
+  else Fehler / leere Daten / falscher Inhaltstyp
+   C -> C : null; bei Exception temporäre Datei\nnach Möglichkeit entfernen
+  end
+ end
+end
+C --> W : Future<File?> abgeschlossen
+alt Datei lesbar
+ W -> F : Image.file(datei)
+else keine Datei oder Bilddekodierung fehlgeschlagen
+ W -> N : Image.network(url) als Fallback
+ opt auch Netzbild scheitert
+  W -> W : Album-Platzhalter zeigen
+ end
+end
+note over C,F
+ synchronisieren(alben) startet nur bei mindestens einer gültigen Cover-URL.
+ Dann alte .img/.tmp-Dateien aufräumen und mit bis zu vier Workern vorladen.
+ dateiFuer()-Einzelaufrufe haben keine globale Vierergrenze.
+end note
+@enduml

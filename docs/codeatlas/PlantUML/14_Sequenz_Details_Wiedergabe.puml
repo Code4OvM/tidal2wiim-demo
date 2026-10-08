@@ -1,0 +1,58 @@
+@startuml
+autonumber
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam ArrowColor #176C78
+skinparam LineColor #176C78
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #F1F7F8
+skinparam classBorderColor #176C78
+skinparam componentBackgroundColor #F1F7F8
+skinparam componentBorderColor #176C78
+skinparam packageBackgroundColor #F8FAFB
+skinparam packageBorderColor #819BA3
+skinparam NoteBackgroundColor #FFF4DC
+skinparam NoteBorderColor #BC8B39
+skinparam NoteFontSize 15
+skinparam sequenceMessageAlign center
+skinparam sequenceParticipantBackgroundColor #F1F7F8
+skinparam sequenceParticipantBorderColor #176C78
+skinparam sequenceLifeLineBorderColor #819BA3
+skinparam sequenceArrowThickness 1.2
+hide footbox
+title Albumdetails laden und an TIDAL übergeben
+actor Nutzer as U
+participant "AlbumDetailPage\nState" as D
+participant "_apiLesen()\n+ AuthService" as A
+participant "LokaleDatenbank" as DB
+participant "Android / externe\nTIDAL-App" as T
+U -> D : Album öffnen (Album + gemeinsamer AuthService)
+par Titelliste aus TIDAL laden
+ loop bis Titellisten-Cursor null
+  D -> A : /v2/albums/{id}/relationships/items\ninclude=items; optional countryCode + cursor
+  A --> D : data + included + links
+  D -> D : AlbumTitel erzeugen\n_titel ergänzen / Cursor prüfen
+ end
+else lokale Kategorien lesen
+ D -> DB : kategorienLaden()\nkategorieIdsFuerAlbum(album.id)
+ DB --> D : Kategorien + IDs
+end
+U -> D : Album oder einzelnen Titel antippen
+D -> T : launchUrl(..., externalApplication)
+note over D,T
+ Album: https://tidal.com/album/{id}
+ Titel: https://tidal.com/browse/track/{id}
+ Video: https://tidal.com/browse/video/{id}
+ Kein Token und kein Audiodatenstrom im Handoff.
+end note
+T --> D : Start angenommen (bool) / Fehler
+U -> T : Wiedergabe mit Play starten\nWiiM über TIDAL Connect auswählen
+note over U,T
+ Der letzte Schritt liegt außerhalb unserer Implementierung.
+ Welcher externe Handler öffnet, entscheidet die Plattform.
+ Die App kann keinen Wiedergabestart garantieren.
+end note
+@enduml

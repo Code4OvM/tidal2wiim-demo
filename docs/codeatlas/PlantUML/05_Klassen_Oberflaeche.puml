@@ -1,0 +1,83 @@
+@startuml
+!pragma layout smetana
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam ArrowColor #176C78
+skinparam LineColor #176C78
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #F1F7F8
+skinparam classBorderColor #176C78
+skinparam componentBackgroundColor #F1F7F8
+skinparam componentBorderColor #176C78
+skinparam packageBackgroundColor #F8FAFB
+skinparam packageBorderColor #819BA3
+skinparam NoteBackgroundColor #FFF4DC
+skinparam NoteBorderColor #BC8B39
+skinparam NoteFontSize 15
+skinparam sequenceMessageAlign center
+skinparam sequenceParticipantBackgroundColor #F1F7F8
+skinparam sequenceParticipantBorderColor #176C78
+skinparam sequenceLifeLineBorderColor #819BA3
+skinparam sequenceArrowThickness 1.2
+hide footbox
+title Oberfläche: Objekte und Rückmeldungen
+top to bottom direction
+class Tidal2WiiMApp <<StatelessWidget>>
+class HomePage <<StatefulWidget>>
+class _HomePageState {
+ -_auth: TidalAuthService
+ -_alben: List<Album>
+ -_appSeite: AppSeite
+ -_kuenstlerEinstellungen: Map
+ -_kategorien: List<Kategorie>
+ -_initialisieren(): Future<void>
+ -_albumOeffnen(album): Future<void>
+}
+class StartPage <<StatelessWidget>> {
+ +albumAnzahl: int
+ +tidalSitzungGespeichert: bool
+ +onSammlungOeffnen: Callback
+ +onLaborOeffnen: Callback
+}
+class KuenstlerPage <<StatelessWidget>>
+class KategoriePage <<StatefulWidget>>
+class AlbumGrid <<StatelessWidget>> {
+ +alben: List<Album>
+ +authService: TidalAuthService
+ +onKategorienGeaendert: Callback
+}
+class AlbumDetailPage <<StatefulWidget>> {
+ +album: Album
+ +authService: TidalAuthService
+ +onAnmeldungUngueltig: Callback
+ +onKategorienGeaendert: Callback
+}
+class AlbumCover <<StatefulWidget>> {
+ +album: Album
+}
+Tidal2WiiMApp ..> HomePage : erzeugt
+HomePage ..> _HomePageState : createState()
+_HomePageState ..> StartPage : baut
+_HomePageState ..> KuenstlerPage : öffnet
+_HomePageState ..> KategoriePage : öffnet
+_HomePageState ..> AlbumDetailPage : öffnet
+KuenstlerPage ..> AlbumGrid : ordner.alben
+KategoriePage ..> AlbumGrid : gefilterte Alben
+AlbumGrid ..> AlbumDetailPage : öffnet beim Antippen
+AlbumGrid ..> AlbumCover : erstellt
+AlbumDetailPage ..> AlbumCover : erstellt
+note right of _HomePageState
+ Start, Labor und Sammlung werden per
+ AppSeite umgeschaltet. Labor ist keine
+ eigene Dart-Klasse. Detailseiten: Navigator.
+end note
+note bottom of AlbumDetailPage
+ Vereinfachte Auswahl; zugehörige States und Dialoge
+ stehen vollständig im Klassenverzeichnis.
+ AuthService wird als dieselbe Referenz weitergegeben.
+ Callback meldet die Änderung; Eltern laden erneut.
+end note
+@enduml

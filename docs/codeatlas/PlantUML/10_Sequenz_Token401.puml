@@ -1,0 +1,73 @@
+@startuml
+autonumber
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam ArrowColor #176C78
+skinparam LineColor #176C78
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #F1F7F8
+skinparam classBorderColor #176C78
+skinparam componentBackgroundColor #F1F7F8
+skinparam componentBorderColor #176C78
+skinparam packageBackgroundColor #F8FAFB
+skinparam packageBorderColor #819BA3
+skinparam NoteBackgroundColor #FFF4DC
+skinparam NoteBorderColor #BC8B39
+skinparam NoteFontSize 15
+skinparam sequenceMessageAlign center
+skinparam sequenceParticipantBackgroundColor #F1F7F8
+skinparam sequenceParticipantBorderColor #176C78
+skinparam sequenceLifeLineBorderColor #819BA3
+skinparam sequenceArrowThickness 1.2
+hide footbox
+title API 401: einmal erneuern und wiederholen
+participant "Aufrufer\n_apiLesen()" as C
+participant "TidalAuthService" as A
+participant "TIDAL OpenAPI" as API
+participant "Token-Endpunkt" as T
+participant "TidalSessionStore" as S
+C -> A : get(client, uri)
+A -> A : Host prüfen; restore(); epoch merken\naccessToken() holen
+A -> API : GET mit Bearer-Token
+API --> A : HTTP 401
+A -> A : accessToken(rejectedToken: token)
+alt anderer Aufruf erneuert bereits
+ A -> A : auf _refreshing warten\noder bereits erneuertes Token übernehmen
+else eigener Refresh erforderlich
+ A -> T : POST /v1/oauth2/token\ngrant_type=refresh_token
+ alt gültige Token-Antwort
+  T --> A : neuer Token-Satz
+  A -> A : epoch prüfen; neue Session setzen
+  A -> S : write(JSON); Speicherfolge einhalten
+  S --> A : abgeschlossen / storageWarning
+ else invalid_grant
+  T --> A : HTTP 400/401 + invalid_grant
+  A -> A : forget(); epoch erhöhen; Sitzung entfernen
+  A -> S : write(null)
+  A --> C : TidalSignInRequired; kein Retry
+ else Netz-, Server- oder Formatfehler
+  T --> A : Fehler / unbrauchbare Antwort
+  A --> C : TidalAuthUnavailable; Sitzung bleibt
+ end
+end
+opt brauchbares Token erhalten
+ A -> API : genau ein weiterer GET
+ API --> A : Antwort
+ alt erneut HTTP 401
+  A -> A : forget(); epoch erhöhen; Sitzung entfernen
+  A -> S : write(null)
+  A --> C : TidalSignInRequired
+ else anderer HTTP-Status
+  A --> C : Response; Statusprüfung in _apiLesen()
+ end
+end
+note over C,A
+ Der Ablaufzeit-Puffer von 60 s kann vor dem ersten GET einen Refresh auslösen.
+ Ohne Refresh-Token: forget(), Anmeldung nötig; kein Token-POST.
+ 403, 429 und 5xx lösen in get() keine 401-Wiederholung aus.
+ Sitzungswechsel wird per epoch erkannt.
+end note
+@enduml

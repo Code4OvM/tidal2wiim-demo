@@ -1,0 +1,114 @@
+[
+  {
+    "id": "01",
+    "slug": "01_Komponenten",
+    "title": "Verantwortung und Datenwege",
+    "kind": "Komponenten",
+    "source": "main.dart; pages/home_page.dart; services/*; data/*",
+    "lesson": "Die App verarbeitet Metadaten und persönliche Ordnung. Der Musikstream und die WiiM-Steuerung liegen außerhalb ihres Dart-Codes."
+  },
+  {
+    "id": "02",
+    "slug": "02_Klassen_Datenmodelle",
+    "title": "Fachmodelle im Arbeitsspeicher",
+    "kind": "Klassen",
+    "source": "models/modelle.dart; core/sammlung.dart",
+    "lesson": "Objekte, fachliche Beziehungen und SQL-Tabellen sind unterschiedliche Sichten. Besonders wichtig: Kategorien speichern IDs, Albumtitel leben nur im Zustand der Detailseite."
+  },
+  {
+    "id": "03",
+    "slug": "03_Klassen_Sitzung",
+    "title": "Sitzungsverwaltung und Testbarkeit",
+    "kind": "Klassen",
+    "source": "services/tidal_auth_service.dart; test/support/memory_session_store.dart",
+    "lesson": "Store, Uhr und HTTP-Client sind austauschbar. Deshalb lassen sich Ablaufzeit, Speicherausfälle und parallele Anfragen ohne echten TIDAL-Zugang testen."
+  },
+  {
+    "id": "04",
+    "slug": "04_Klassen_Kuenstlereditor",
+    "title": "Künstlereditor: Eingabe, Entwurf und Speicherung",
+    "kind": "Klassen",
+    "source": "models/kuenstler_sortierung.dart; pages/kuenstler_sortiernamen_page.dart; data/kuenstler_sortierung_speichern.dart",
+    "lesson": "Der Entwurf trennt vorläufige Eingaben vom gespeicherten Stand. Eine Dart-Extension ist keine Vererbung und erhält deshalb keinen Generalisierungspfeil."
+  },
+  {
+    "id": "05",
+    "slug": "05_Klassen_Oberflaeche",
+    "title": "Oberfläche: Objekte und Rückmeldungen",
+    "kind": "Klassen",
+    "source": "main.dart; pages/*; widgets/album_grid.dart; widgets/album_cover.dart",
+    "lesson": "Widgets erhalten Daten und Funktionen über Konstruktoren. Ein Callback kann nach dem Speichern das Neuladen der übergeordneten Ansicht auslösen."
+  },
+  {
+    "id": "06",
+    "slug": "06_Sequenz_Appstart",
+    "title": "Appstart: Cache und gespeicherte Sitzung",
+    "kind": "Sequenz",
+    "source": "pages/home_page.dart: _initialisieren(), _bibliothekAusCacheLaden(); services/tidal_auth_service.dart: restore()",
+    "lesson": "Zwei asynchrone Aufgaben starten gemeinsam. Ein geladener Cache erscheint unabhängig vom Abschluss einer späteren Netzwerkaktualisierung; Tokens und Alben werden getrennt gelesen."
+  },
+  {
+    "id": "07",
+    "slug": "07_Sequenz_Anmeldung",
+    "title": "Interaktive Anmeldung und sicheres Speichern",
+    "kind": "Sequenz",
+    "source": "pages/home_page.dart: _login(); services/tidal_auth_service.dart: acceptLogin(), _persist()",
+    "lesson": "Erfolgreiche Anmeldung und erfolgreiche dauerhafte Speicherung sind zwei verschiedene Ergebnisse. Diese Unterscheidung verhindert falsche Versprechen beim nächsten Appstart."
+  },
+  {
+    "id": "08",
+    "slug": "08_Sequenz_Bibliothek",
+    "title": "Bibliothek laden: Vordergrund und Hintergrund",
+    "kind": "Sequenz",
+    "source": "pages/home_page.dart: _albenLaden(), _bibliothekImHintergrundAktualisieren(); data/lokale_datenbank.dart: albumCacheSpeichern()",
+    "lesson": "Beim Hintergrundabgleich bleibt die alte Ansicht bis zum vollständigen neuen Stand erhalten. Das Vordergrundladen zeigt dagegen bereits gelesene Teilmengen."
+  },
+  {
+    "id": "09",
+    "slug": "09_Sequenz_Albumseite",
+    "title": "Von JSON-Ressourcen zu Album-Objekten",
+    "kind": "Sequenz",
+    "source": "pages/home_page.dart: _seiteLesen(); services/tidal_api.dart; models/modelle.dart: Album.ausRessourcen()",
+    "lesson": "Sammlungs-IDs und Album-Metadaten kommen aus getrennten Abfragen. Der Ressourcenindex löst die Beziehungen auf Künstler und Cover auf."
+  },
+  {
+    "id": "10",
+    "slug": "10_Sequenz_Token401",
+    "title": "API 401: einmal erneuern und wiederholen",
+    "kind": "Sequenz",
+    "source": "services/tidal_auth_service.dart: get(), accessToken(), _refresh(), _persist()",
+    "lesson": "Ein Netzwerkfehler ist kein Beweis für eine ungültige Anmeldung. Parallele Aufrufe teilen den Refresh; eine zweite Ablehnung endet ohne Endlosschleife."
+  },
+  {
+    "id": "11",
+    "slug": "11_Sequenz_Kuenstlereditor",
+    "title": "Sortiernamen gesammelt bearbeiten und speichern",
+    "kind": "Sequenz",
+    "source": "pages/home_page.dart: _kuenstlerSortiernamenOeffnen(); pages/kuenstler_sortiernamen_page.dart; models/kuenstler_sortierung.dart; data/kuenstler_sortierung_speichern.dart",
+    "lesson": "Kein Speichern pro Tastendruck: Eine bestätigte Änderungsliste wird gemeinsam geschrieben. Die Seite kennt das konkrete SQL nicht, sondern nur ihren Speicher-Callback."
+  },
+  {
+    "id": "12",
+    "slug": "12_Sequenz_Kategorien",
+    "title": "Ein Album mehreren Kategorien zuordnen",
+    "kind": "Sequenz",
+    "source": "pages/album_detail_page.dart: _kategorienBearbeiten(); widgets/dialoge.dart; data/lokale_datenbank.dart: albumKategorienSetzen()",
+    "lesson": "Die Checkboxen liefern nur IDs. Erst die Detailseite veranlasst die Transaktion und meldet die Änderung an übergeordnete Seiten."
+  },
+  {
+    "id": "13",
+    "slug": "13_Sequenz_Cover",
+    "title": "Coveranzeige: Datei, Download und Ersatzanzeige",
+    "kind": "Sequenz",
+    "source": "services/cover_cache.dart; widgets/album_cover.dart",
+    "lesson": "Ein File ist kein Albumdatensatz. Die Oberfläche erhält eine Datei oder null; der Coverabruf verwendet keinen OAuth-Bearer-Header."
+  },
+  {
+    "id": "14",
+    "slug": "14_Sequenz_Details_Wiedergabe",
+    "title": "Albumdetails laden und an TIDAL übergeben",
+    "kind": "Sequenz",
+    "source": "pages/album_detail_page.dart: initState(), _titelLaden(), _inTidalOeffnen(), _titelInTidalOeffnen()",
+    "lesson": "Titelliste und Kategorien stammen aus verschiedenen Quellen. Ein externer Link ist eine Übergabe an eine andere App und kein eigener Musikplayer."
+  }
+]

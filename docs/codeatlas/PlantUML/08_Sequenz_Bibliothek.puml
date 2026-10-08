@@ -1,0 +1,56 @@
+@startuml
+autonumber
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam ArrowColor #176C78
+skinparam LineColor #176C78
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #F1F7F8
+skinparam classBorderColor #176C78
+skinparam componentBackgroundColor #F1F7F8
+skinparam componentBorderColor #176C78
+skinparam packageBackgroundColor #F8FAFB
+skinparam packageBorderColor #819BA3
+skinparam NoteBackgroundColor #FFF4DC
+skinparam NoteBorderColor #BC8B39
+skinparam NoteFontSize 15
+skinparam sequenceMessageAlign center
+skinparam sequenceParticipantBackgroundColor #F1F7F8
+skinparam sequenceParticipantBorderColor #176C78
+skinparam sequenceLifeLineBorderColor #819BA3
+skinparam sequenceArrowThickness 1.2
+hide footbox
+title Bibliothek laden: Vordergrund und Hintergrund
+participant "Home\n_HomePageState" as H
+participant "LokaleDatenbank" as DB
+participant "LokalerCoverCache" as C
+alt Hintergrundabgleich bei vorhandenen Alben
+ H -> H : _bibliothekImHintergrundAktualisieren()\nSitzungsversion merken; temporäre Map anlegen
+ loop bis nächster Cursor null
+  H -> H : _seiteLesen(client, cursor)\nDetails in Diagramm 09
+  H -> H : Alben nach ID sammeln\nSammlungs-Cursor gegen Wiederholung prüfen
+ end
+ H -> H : mounted und _auth.epoch prüfen
+ H -> DB : albumCacheSpeichern(frischeAlben, zeit)
+ DB -> DB : Transaktion: DELETE + Batch INSERT
+ DB --> H : Commit abgeschlossen
+ H -> H : erst jetzt _alben ersetzen / setState()
+ H ->> C : synchronisieren(frischeAlben)
+ note over H,DB : Fehler vor erfolgreichem Speichern:\nalter Cache und bisherige Ansicht bleiben bestehen.
+else Vordergrundladen im Labor
+ H -> H : _albenLaden() / Zugang prüfen
+ loop bis vollständig oder Stopp vorgemerkt
+  H -> H : _seiteLesen(client, cursor)
+  H -> H : Teilmenge nach IDs zusammenführen\nFortschritt mit setState() anzeigen
+ end
+ opt vollständig geladen
+  H -> DB : albumCacheSpeichern(_alben, zeit)
+  DB --> H : erfolgreich
+  H ->> C : synchronisieren(_alben)
+ end
+ note over H : Bei Stopp bleibt eine Teilmenge im RAM.\nNur vollständige Läufe ersetzen den SQLite-Cache.\nVordergrundpfad hat keinen gleichwertigen Cursor-Guard.
+end
+@enduml

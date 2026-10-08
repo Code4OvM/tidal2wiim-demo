@@ -1,0 +1,61 @@
+@startuml
+autonumber
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam ArrowColor #176C78
+skinparam LineColor #176C78
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #F1F7F8
+skinparam classBorderColor #176C78
+skinparam componentBackgroundColor #F1F7F8
+skinparam componentBorderColor #176C78
+skinparam packageBackgroundColor #F8FAFB
+skinparam packageBorderColor #819BA3
+skinparam NoteBackgroundColor #FFF4DC
+skinparam NoteBorderColor #BC8B39
+skinparam NoteFontSize 15
+skinparam sequenceMessageAlign center
+skinparam sequenceParticipantBackgroundColor #F1F7F8
+skinparam sequenceParticipantBorderColor #176C78
+skinparam sequenceLifeLineBorderColor #819BA3
+skinparam sequenceArrowThickness 1.2
+hide footbox
+title Appstart: Cache und gespeicherte Sitzung
+participant "Home\n_HomePageState" as H
+participant "LokaleDatenbank" as DB
+participant "TidalAuthService" as A
+participant "TidalSessionStore" as S
+participant "LokalerCoverCache" as C
+H -> H : initState() / _initialisieren()
+par lokal gespeicherte Bibliothek
+ H -> DB : albumCacheLaden()
+ DB --> H : LokaleBibliothekCache? 
+ opt Cache vorhanden und noch übernehmbar
+  H -> H : _alben + Zeitstempel setzen\nsetState()
+  H ->> C : synchronisieren(cache.alben)\nunawaited
+ end
+else Sitzung wiederherstellen
+ H -> A : restore()
+ A -> S : read()
+ S --> A : JSON-Zeichenkette oder null
+ A -> A : Version, clientId und Session prüfen
+ A -->> H : notifyListeners()\n_authGeaendert()
+end
+H -> H : Future.wait abgeschlossen\n_anmeldungWirdGeladen = false
+alt Sitzung vorhanden
+ H -> A : accessToken()
+ A --> H : Token oder Fehler
+ opt Token erhalten und _alben nicht leer
+  H ->> H : _bibliothekImHintergrundAktualisieren()
+ end
+else keine Sitzung
+ note over H : Kein automatischer Login.\nStartseite / Labor bleiben bedienbar.
+end
+note over H,A
+ accessToken() kann ein vorhandenes Token ohne Netzaufruf liefern.
+ Kein Cache: Erstladung wird im Labor ausdrücklich ausgelöst.
+end note
+@enduml

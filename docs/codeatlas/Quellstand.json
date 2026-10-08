@@ -1,0 +1,183 @@
+{
+  "date": "2026-10-08",
+  "source": {
+    "repository": "Code4OvM/tidal2wiim",
+    "commit": "a8aa3cf959fd88398ef2d30472ceadc865e9cb94",
+    "tree": "dafa6e44ae3763ff3cc7766511659388a73e8ae6"
+  },
+  "demo": {
+    "repository": "Code4OvM/tidal2wiim-demo",
+    "commit": "851304ffd33e6ed9f65d74a29d146311e9a6265b",
+    "tree": "9acc41b7e640b3ea1c0018197d0ffa853b695149"
+  },
+  "different_paths": [
+    "README.md"
+  ],
+  "file_count_each": 162,
+  "inspected_files": [
+    {
+      "path": "README.md",
+      "blob_sha": "41ef875fba009405053326cdcb13fb1444b6b5d6",
+      "size": 12269
+    },
+    {
+      "path": "analysis_options.yaml",
+      "blob_sha": "e5e0f9bc9877185916cc32b23196b7e712a2215c",
+      "size": 1530
+    },
+    {
+      "path": "android/app/build.gradle.kts",
+      "blob_sha": "db30d2a15bc0a343cdf5adb609f77a031c50f495",
+      "size": 1871
+    },
+    {
+      "path": "android/app/src/main/AndroidManifest.xml",
+      "blob_sha": "24d64dc58492f1cbaeabd7d01f1bbc29b713059f",
+      "size": 2147
+    },
+    {
+      "path": "docs/datenmodell/PlantUML/01_ER_Modell_Chen.puml",
+      "blob_sha": "6971f93b8f16c410210e48b65b7f7b950520a418",
+      "size": 2474
+    },
+    {
+      "path": "docs/datenmodell/PlantUML/02_Relationales_Tabellenmodell.puml",
+      "blob_sha": "97851a77d8f8c9ad165f7268820a97da2d60e1bc",
+      "size": 3366
+    },
+    {
+      "path": "lib/core/hilfen.dart",
+      "blob_sha": "3ad7570ca4565e62805e26fb15a106c848c3d60b",
+      "size": 2034
+    },
+    {
+      "path": "lib/core/sammlung.dart",
+      "blob_sha": "fc7ea095ad9d026ce7940df24471992bd1dc5dc8",
+      "size": 4898
+    },
+    {
+      "path": "lib/data/kuenstler_sortierung_speichern.dart",
+      "blob_sha": "c79877aab8264d9cefab4659b02ecff4c4fcc164",
+      "size": 2524
+    },
+    {
+      "path": "lib/data/lokale_datenbank.dart",
+      "blob_sha": "f3556dadd46cfc1756a1e86efafba8b12662293e",
+      "size": 8524
+    },
+    {
+      "path": "lib/main.dart",
+      "blob_sha": "e06cc7634568b67da44befa87b028722ea3b6c4c",
+      "size": 1851
+    },
+    {
+      "path": "lib/models/kuenstler_sortierung.dart",
+      "blob_sha": "c333c1f9c25e7f946921bbf46c5b912b2465dbb6",
+      "size": 4066
+    },
+    {
+      "path": "lib/models/modelle.dart",
+      "blob_sha": "dd1244abb060386fb23785d9fb79ac1e60fd4874",
+      "size": 4356
+    },
+    {
+      "path": "lib/pages/album_detail_page.dart",
+      "blob_sha": "6d35affacb7a32f8a173e2f11d34c6897396ab3e",
+      "size": 13360
+    },
+    {
+      "path": "lib/pages/home_page.dart",
+      "blob_sha": "99c15d6fb3f81730e105d258810836a77625fee8",
+      "size": 52425
+    },
+    {
+      "path": "lib/pages/kategorie_page.dart",
+      "blob_sha": "b607f92a57590d43a262961972c2e127aa2f9a23",
+      "size": 3018
+    },
+    {
+      "path": "lib/pages/kuenstler_page.dart",
+      "blob_sha": "c6fcd2d67852bd8bb1b8a721771bb3353b2c193c",
+      "size": 1001
+    },
+    {
+      "path": "lib/pages/kuenstler_sortiernamen_page.dart",
+      "blob_sha": "1fff195c7cce12e2e1228a1a8d6489146f4864b2",
+      "size": 17473
+    },
+    {
+      "path": "lib/pages/start_page.dart",
+      "blob_sha": "d88f306bcdd7aab73a9d740128abdf995e851bb2",
+      "size": 20360
+    },
+    {
+      "path": "lib/services/cover_cache.dart",
+      "blob_sha": "8774c08cded5de2b6e562ffee7d101ae70a206bb",
+      "size": 5172
+    },
+    {
+      "path": "lib/services/tidal_api.dart",
+      "blob_sha": "47c09b61f769e62c3d1ea44a73e9405f9b225185",
+      "size": 4221
+    },
+    {
+      "path": "lib/services/tidal_auth_service.dart",
+      "blob_sha": "2d601dedb9bf35b6e2fffb1efcf34cdefce01f01",
+      "size": 13417
+    },
+    {
+      "path": "lib/widgets/album_cover.dart",
+      "blob_sha": "1065fb3eb64c10e209f4c29dc816466e0ffc54d0",
+      "size": 2359
+    },
+    {
+      "path": "lib/widgets/album_grid.dart",
+      "blob_sha": "f3ea35e6f7d6b346fec604945dc9428774a0a5e6",
+      "size": 2975
+    },
+    {
+      "path": "lib/widgets/dialoge.dart",
+      "blob_sha": "25d9e6b50ce4f0e05c0b727e091552f7ed8edac2",
+      "size": 6706
+    },
+    {
+      "path": "pubspec.lock",
+      "blob_sha": "60f41f128138d885909ec1bba4ebbe12df04dfec",
+      "size": 20150
+    },
+    {
+      "path": "pubspec.yaml",
+      "blob_sha": "167840b3aa2a32291128749702fb41c5de3a3f30",
+      "size": 4264
+    },
+    {
+      "path": "test/kuenstler_sortiernamen_page_test.dart",
+      "blob_sha": "d54f069f17c1f1de7b22597e38cb37d2716da131",
+      "size": 12255
+    },
+    {
+      "path": "test/kuenstler_sortierung_test.dart",
+      "blob_sha": "8dd6bf5481109044cbf44c14a2f43a1b2105635f",
+      "size": 5791
+    },
+    {
+      "path": "test/support/memory_session_store.dart",
+      "blob_sha": "083f71f8da29ca137ddd144e59539643a7d74477",
+      "size": 517
+    },
+    {
+      "path": "test/tidal_auth_service_test.dart",
+      "blob_sha": "d1b2b91236103c60f5906430c5f907f7b42ab547",
+      "size": 10847
+    },
+    {
+      "path": "test/widget_test.dart",
+      "blob_sha": "04f984eb8cf23533b1974cce356315564428a137",
+      "size": 10279
+    }
+  ],
+  "module_count": 19,
+  "class_interface_count": 46,
+  "diagram_count": 14,
+  "verification": "Alle 32 untersuchten Quelldateien stimmen über Git-Blob-Hashes mit den am 08.10.2026 gelesenen GitHub-Dateibäumen überein."
+}

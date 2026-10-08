@@ -118,6 +118,16 @@ Wie sind diese Informationen tatsächlich gespeichert? Das zweite Modell zeigt d
 
 Zum Nachvollziehen im Unterricht: [Beide Darstellungen als PDF](docs/datenmodell/Tidal2WiiM_Datenmodelle_Leseansicht.pdf) · [Datenbankimplementierung im Quellcode](lib/data/lokale_datenbank.dart)
 
+## Dokumentation und Codeatlas
+
+Der Codeatlas beschreibt die Aufgaben der 19 Dart-Module, ihre Verbindungen und den Datenaustausch. Klassen- und Sequenzdiagramme ergänzen die vorhandenen ER- und Tabellenmodelle.
+
+- [Dokumentationsübersicht](docs/README.md) – Einstieg in Codeatlas und Datenmodelle.
+- [Codeatlas und Leseweg](docs/codeatlas/README.md) – Architektur, Modulhandbuch und Datenaustausch.
+- [Modulübersicht](docs/codeatlas/00_Kurzueberblick.md) – jedes Modul mit seiner Aufgabe und einem Link zum Steckbrief.
+- [Klassen- und Sequenzdiagramme](docs/codeatlas/04_Diagrammuebersicht.md) – 14 Modelle mit Darstellungen und PlantUML-Quellen.
+- [Codeatlas als PDF](docs/codeatlas/Tidal2WiiM_Codeatlas_2026-10-08.pdf) – zusammenhängende Lesefassung, Version vom 08.10.2026.
+
 ## Projektstand
 
 Tidal2WiiM ist aus einem persönlichen Bedarf entstanden und wird auf dem eigenen Tablet genutzt. Die Kernfunktionen für Sammlung, Organisation und Übergabe an TIDAL sind umgesetzt. Das Repository dokumentiert diesen Entwicklungsstand und bildet die Grundlage für weitere Verbesserungen aus dem Alltag.

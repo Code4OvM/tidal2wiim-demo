@@ -1,0 +1,55 @@
+@startuml
+autonumber
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam ArrowColor #176C78
+skinparam LineColor #176C78
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #F1F7F8
+skinparam classBorderColor #176C78
+skinparam componentBackgroundColor #F1F7F8
+skinparam componentBorderColor #176C78
+skinparam packageBackgroundColor #F8FAFB
+skinparam packageBorderColor #819BA3
+skinparam NoteBackgroundColor #FFF4DC
+skinparam NoteBorderColor #BC8B39
+skinparam NoteFontSize 15
+skinparam sequenceMessageAlign center
+skinparam sequenceParticipantBackgroundColor #F1F7F8
+skinparam sequenceParticipantBorderColor #176C78
+skinparam sequenceLifeLineBorderColor #819BA3
+skinparam sequenceArrowThickness 1.2
+hide footbox
+title Interaktive Anmeldung und sicheres Speichern
+actor Nutzer as U
+participant "Home\n_login()" as H
+participant "FlutterAppAuth\n+ TIDAL-Anmeldung" as F
+participant "TidalAuthService" as A
+participant "TidalSessionStore" as S
+U -> H : Anmeldung im Labor / über Startaktion
+H -> F : authorizeAndExchangeCode(request)
+note over H,F : clientId, redirectUrl, user.read, collection.read\nKeine Zugangsdaten des Nutzers im App-Code.
+alt Anmeldung erfolgreich
+ F --> H : Access-Token, Refresh-Token?, Ablaufzeit?
+ H -> A : acceptLogin(TidalSession)
+ A -> A : restore(); _epoch++; _session setzen
+ A -> S : write(JSON mit version, clientId, session)
+ S --> A : abgeschlossen oder Speicherfehler
+ A -->> H : notifyListeners()
+ A --> H : Future<void> abgeschlossen
+ H -> H : Status aktualisieren; Bedienung freigeben
+ opt Bibliothek im RAM vorhanden
+  H ->> H : Hintergrundabgleich starten
+ end
+else abgebrochen / Plattformfehler
+ F --> H : Exception
+ H -> H : vorhandene Sitzung behalten\nverständlichen Status anzeigen
+end
+note over A,S
+ Ein Speicherfehler setzt storageWarning.
+ Die Sitzung kann im RAM funktionieren, ohne dauerhaft gesichert zu sein.
+end note
+@enduml

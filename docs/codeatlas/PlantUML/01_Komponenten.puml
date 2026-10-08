@@ -1,0 +1,61 @@
+@startuml
+!pragma layout smetana
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam ArrowColor #176C78
+skinparam LineColor #176C78
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #F1F7F8
+skinparam classBorderColor #176C78
+skinparam componentBackgroundColor #F1F7F8
+skinparam componentBorderColor #176C78
+skinparam packageBackgroundColor #F8FAFB
+skinparam packageBorderColor #819BA3
+skinparam NoteBackgroundColor #FFF4DC
+skinparam NoteBorderColor #BC8B39
+skinparam NoteFontSize 15
+skinparam sequenceMessageAlign center
+skinparam sequenceParticipantBackgroundColor #F1F7F8
+skinparam sequenceParticipantBorderColor #176C78
+skinparam sequenceLifeLineBorderColor #819BA3
+skinparam sequenceArrowThickness 1.2
+hide footbox
+title Verantwortung und Datenwege
+left to right direction
+package "App-Paket tidal2wiim" {
+ component "Oberfläche und Koordination\nHomePage / _HomePageState\nweitere Pages und Widgets" as UI
+ component "Fachliche Daten und Funktionen\nmodels/ · core/" as MODEL
+ component "Lokale Speicherung\nLokaleDatenbank + Extension" as DB
+ component "Coverdateien\nLokalerCoverCache" as COVER
+ component "JSON-Zugriff\n_apiLesen() / tidal_api.dart" as API
+ component "Sitzung\nTidalAuthService" as AUTH
+ UI --> MODEL : Objekte, Listen, Entwürfe
+ UI --> DB : Future<T> / Änderungen
+ UI --> COVER : Album → Future<File?>
+ UI --> API : Pfad + Parameter
+ API --> AUTH : get(client, uri)
+}
+database "SQLite\ntidal2wiim.db" as SQL
+folder "Dateisystem\ncover_cache/" as FS
+component "Sicherer Plattform-Speicher\nSecureTidalSessionStore" as SEC
+cloud "TIDAL OpenAPI\nJSON-Metadaten" as TIDAL
+cloud "TIDAL-Anmeldung\nOAuth / Token-Endpunkt" as LOGIN
+cloud "Cover-Host\nBildbytes" as CDN
+component "Externe TIDAL-App\nWiedergabe / TIDAL Connect" as PLAYER
+DB --> SQL : Datensätze / Transaktionen
+COVER --> FS : .img-Dateien
+COVER --> CDN : HTTPS, ohne OAuth-Header
+AUTH --> SEC : ein JSON-Tokenpaket
+AUTH --> TIDAL : HTTPS GET + Bearer-Token
+AUTH --> LOGIN : POST zur Erneuerung
+UI --> LOGIN : interaktives Login\nüber flutter_appauth
+UI --> PLAYER : Album-/Titellink\nüber url_launcher
+note bottom of UI
+ Fachliche Gruppierung, keine starre Schichtenarchitektur.
+ HomePage koordiniert zugleich UI, API-Laden und lokale Daten.
+ callbacks und setState aktualisieren die Darstellung.
+end note
+@enduml

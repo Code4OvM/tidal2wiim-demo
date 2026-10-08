@@ -1,0 +1,95 @@
+@startuml
+!pragma layout smetana
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam ArrowColor #176C78
+skinparam LineColor #176C78
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #F1F7F8
+skinparam classBorderColor #176C78
+skinparam componentBackgroundColor #F1F7F8
+skinparam componentBorderColor #176C78
+skinparam packageBackgroundColor #F8FAFB
+skinparam packageBorderColor #819BA3
+skinparam NoteBackgroundColor #FFF4DC
+skinparam NoteBorderColor #BC8B39
+skinparam NoteFontSize 15
+skinparam sequenceMessageAlign center
+skinparam sequenceParticipantBackgroundColor #F1F7F8
+skinparam sequenceParticipantBorderColor #176C78
+skinparam sequenceLifeLineBorderColor #819BA3
+skinparam sequenceArrowThickness 1.2
+hide footbox
+title Fachmodelle im Arbeitsspeicher
+left to right direction
+class Album {
+ +id: String
+ +titel: String
+ +kuenstlerListe: List<Kuenstler>
+ +erscheinungsdatum: DateTime?
+ +coverUrl: String?
+ +metadatenFehlen: bool
+ +jahr: int? {readOnly}
+ +ausRessourcen(id, ressourcen): Album
+}
+class Kuenstler { 
+ +id: String
+ +name: String
+}
+class KuenstlerOrdner {
+ +kuenstler: Kuenstler
+ +alben: List<Album>
+ +einstellung: KuenstlerEinstellung?
+ +anzeigename: String {readOnly}
+ +sortiername: String {readOnly}
+}
+class KuenstlerEinstellung {
+ +kuenstlerId: String
+ +eigenerName: String?
+ +sortiername: String
+ +ausMap(map): KuenstlerEinstellung
+ +zuMap(): Map
+}
+class Kategorie {
+ +id: int
+ +name: String
+ +albumIds: Set<String>
+ +albumAnzahl: int {readOnly}
+}
+class AlbumSeite {
+ +alben: List<Album>
+ +naechsterCursor: String?
+}
+class LokaleBibliothekCache {
+ +alben: List<Album>
+ +gespeichertAm: DateTime
+}
+class AlbumTitel {
+ +id: String
+ +typ: String
+ +titel: String
+ +nummer: int?
+ +teil: int?
+ +dauer: Duration?
+}
+Album --> "0..*" Kuenstler : kuenstlerListe
+KuenstlerOrdner --> "1" Kuenstler : kuenstler
+KuenstlerOrdner --> "0..*" Album : alben
+KuenstlerOrdner --> "0..1" KuenstlerEinstellung : einstellung
+AlbumSeite --> "0..*" Album : alben
+LokaleBibliothekCache --> "0..*" Album : alben
+Kategorie ..> Album : Zuordnung über IDs\nkeine Album-Referenzen im Feld
+note right of AlbumTitel
+ AlbumTitel wird von der Detailseite geladen.
+ Album enthält keine Titelliste.
+ Titel werden nicht in album_cache gespeichert.
+end note
+note bottom of KuenstlerOrdner
+ Laufzeitansicht aus Alben + Einstellungen.
+ Kein Dateisystemordner, keine eigene Tabelle.
+ Pfeile zeigen Referenzen; keine Besitz-Komposition.
+end note
+@enduml

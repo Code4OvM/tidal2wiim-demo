@@ -1,0 +1,81 @@
+@startuml
+!pragma layout smetana
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam ArrowColor #176C78
+skinparam LineColor #176C78
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #F1F7F8
+skinparam classBorderColor #176C78
+skinparam componentBackgroundColor #F1F7F8
+skinparam componentBorderColor #176C78
+skinparam packageBackgroundColor #F8FAFB
+skinparam packageBorderColor #819BA3
+skinparam NoteBackgroundColor #FFF4DC
+skinparam NoteBorderColor #BC8B39
+skinparam NoteFontSize 15
+skinparam sequenceMessageAlign center
+skinparam sequenceParticipantBackgroundColor #F1F7F8
+skinparam sequenceParticipantBorderColor #176C78
+skinparam sequenceLifeLineBorderColor #819BA3
+skinparam sequenceArrowThickness 1.2
+hide footbox
+title Künstlereditor: Eingabe, Entwurf und Speicherung
+top to bottom direction
+class KuenstlerSortiernamenPage {
+ +kuenstler: List<KuenstlerSortierZeile>
+ +onSpeichern: Future<void> Function(List)
+ +createState()
+}
+class _KuenstlerSortiernamenPageState {
+ -_entwurf: KuenstlerSortierEntwurf
+ -_controller: Map<String, TextEditingController>
+ -_speichert: bool
+ -_speichern(): Future<void>
+ -_verlassen(): Future<void>
+}
+class KuenstlerSortierEntwurf {
+ +zeilen: List<KuenstlerSortierZeile>
+ -_werte: Map<String, String>
+ +setzen(id, wert): void
+ +wertFuer(id): String
+ +filtern(suche): List<KuenstlerSortierZeile>
+ +aenderungen: List<KuenstlerSortierAenderung>
+ +hatAenderungen: bool
+}
+class KuenstlerSortierZeile {
+ +id: String
+ +tidalName: String
+ +anzeigename: String
+ +gespeicherterSortiername: String?
+ +startwert: String
+}
+class KuenstlerSortierAenderung {
+ +kuenstlerId: String
+ +tidalName: String
+ +sortiername: String
+}
+class LokaleDatenbank
+class KuenstlerSortierungSpeichern <<Dart extension>> {
+ +kuenstlerSortiernamenSpeichern(aenderungen): Future<void>
+}
+KuenstlerSortiernamenPage ..> _KuenstlerSortiernamenPageState : createState()
+_KuenstlerSortiernamenPageState --> "1" KuenstlerSortierEntwurf
+KuenstlerSortierEntwurf --> "0..*" KuenstlerSortierZeile : Ausgangswerte
+KuenstlerSortierEntwurf ..> KuenstlerSortierAenderung : erzeugt Änderungsliste
+KuenstlerSortiernamenPage ..> KuenstlerSortierungSpeichern : onSpeichern wird\nvon HomePage gebunden
+KuenstlerSortierungSpeichern ..> LokaleDatenbank : erweitert; keine Unterklasse
+note bottom of KuenstlerSortierEntwurf
+ Eigene Dart-Bibliothek ohne Flutter oder SQLite.
+ Beim Tippen nur RAM; stabile Reihenfolge und Filterbasis.
+ Leer bedeutet: ursprünglichen TIDAL-Namen verwenden.
+end note
+note right of KuenstlerSortierungSpeichern
+ Alle Änderungen in einer Transaktion.
+ custom_name bleibt erhalten.
+ Kein TIDAL-Schreibzugriff.
+end note
+@enduml

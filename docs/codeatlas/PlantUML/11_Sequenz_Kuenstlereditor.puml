@@ -1,0 +1,60 @@
+@startuml
+autonumber
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam ArrowColor #176C78
+skinparam LineColor #176C78
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #F1F7F8
+skinparam classBorderColor #176C78
+skinparam componentBackgroundColor #F1F7F8
+skinparam componentBorderColor #176C78
+skinparam packageBackgroundColor #F8FAFB
+skinparam packageBorderColor #819BA3
+skinparam NoteBackgroundColor #FFF4DC
+skinparam NoteBorderColor #BC8B39
+skinparam NoteFontSize 15
+skinparam sequenceMessageAlign center
+skinparam sequenceParticipantBackgroundColor #F1F7F8
+skinparam sequenceParticipantBorderColor #176C78
+skinparam sequenceLifeLineBorderColor #819BA3
+skinparam sequenceArrowThickness 1.2
+hide footbox
+title Sortiernamen gesammelt bearbeiten und speichern
+participant "Home\n_HomePageState" as H
+participant "Editor\nPage / State" as E
+participant "KuenstlerSortierEntwurf" as D
+participant "LokaleDatenbank\n+ Extension" as DB
+H -> DB : kuenstlerEinstellungenLaden()
+DB --> H : Map<String, KuenstlerEinstellung>
+H -> H : aus _alben + Einstellungen\nKuenstlerSortierZeile-Liste bilden
+H -> E : Navigator.push<bool>\nZeilen + onSpeichern-Callback
+E -> D : KuenstlerSortierEntwurf(zeilen)
+loop Nutzer bearbeitet ein Feld
+ E -> D : setzen(id, rohtext)
+ D --> E : Änderungsstand / Filterergebnis
+ note right of D : Nur Arbeitsspeicher.\nKeine SQL-Schreiboperation.
+end
+alt Speichern
+ E -> D : aenderungen
+ D --> E : List<KuenstlerSortierAenderung>
+ E -> DB : onSpeichern(aenderungen)\ngebunden an kuenstlerSortiernamenSpeichern()
+ DB -> DB : IDs prüfen; Transaktion\nnur geänderte IDs; custom_name erhalten
+ alt erfolgreich
+  DB --> E : Future<void> abgeschlossen
+  E --> H : Navigator.pop(true)
+  H -> DB : Einstellungen erneut laden
+  DB --> H : aktualisierte Map
+  H -> H : setState(); Ordner + A-Z-Index neu ableiten
+ else Schreibfehler
+  DB --> E : Exception / Rollback
+  E -> E : Entwurf behalten; Fehler zeigen\nnochmals speichern möglich
+ end
+else Abbrechen / Zurück
+ E -> E : bei Änderungen Rückfrage\nbei Verwerfen schließen
+ E --> H : false bzw. kein true; kein Speichern
+end
+@enduml
