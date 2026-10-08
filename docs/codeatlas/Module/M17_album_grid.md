@@ -6,7 +6,7 @@
 
 **Aufgabe:** Zeigt Albumkarten mit Cover, Titel, Künstlern und Jahr. Öffnet beim Antippen eine AlbumDetailPage mit denselben Diensten und Callbacks.
 
-**Eingaben:** List<Album>, AuthService, optionales Land und zwei Callbacks.
+**Eingaben:** List<Album>, AuthService, **optionaler Ländercode des TIDAL-Kontos, beispielsweise DE für Deutschland** und zwei Callbacks.
 
 **Ausgaben:** Albumraster und Navigation zur Detailseite.
 

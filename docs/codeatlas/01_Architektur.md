@@ -23,7 +23,7 @@ Die fachlichen Ordner sind daher keine strengen technischen Schichten. `HomePage
 
 ## So funktionieren die Verbindungen
 
-**Konstruktorparameter:** Beim Öffnen einer Seite werden Album, Listen, optionales Land und die bestehende AuthService-Referenz übergeben. Die Daten werden nicht erneut über ein Netzwerk zwischen den Dart-Dateien ausgetauscht.
+**Konstruktorparameter:** Beim Öffnen einer Seite werden Album, Listen, **optionaler Ländercode des TIDAL-Kontos, beispielsweise DE für Deutschland** und die bestehende AuthService-Referenz übergeben. Die Daten werden nicht erneut über ein Netzwerk zwischen den Dart-Dateien ausgetauscht.
 
 **Future und await:** Ein Future bezeichnet ein späteres Ergebnis. await wartet innerhalb der betreffenden asynchronen Funktion. Future.wait startet keine eigenen Betriebssystemthreads; die begonnenen asynchronen Vorgänge können sich zeitlich überlappen. Auch die Cover-Worker sind asynchrone Schleifen, keine ausdrücklich erzeugten Isolates.
 

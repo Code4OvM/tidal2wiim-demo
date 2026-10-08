@@ -252,7 +252,7 @@
 
 **Aufgabe:** Lädt die Titelliste aus TIDAL und Kategorien aus SQLite unabhängig voneinander. Ermöglicht Kategoriezuordnung und öffnet Album-, Track- oder Videolinks extern.
 
-**Eingaben:** Album, gemeinsamer AuthService, optionales Land sowie Callbacks für Anmeldung und Kategorieänderungen.
+**Eingaben:** Album, gemeinsamer AuthService, **optionaler Ländercode des TIDAL-Kontos, beispielsweise DE für Deutschland** sowie Callbacks für Anmeldung und Kategorieänderungen.
 
 **Ausgaben:** List<AlbumTitel> im Seitenzustand, lokale Kategorieauswahl und externe URLs; Rückmeldung nach gespeicherter Zuordnung.
 
@@ -272,7 +272,7 @@
 
 **Aufgabe:** Ist eine kleine, zustandslose Hülle: Zeigt den Anzeigenamen als Seitentitel und übergibt die zugehörigen Alben an AlbumGrid.
 
-**Eingaben:** KuenstlerOrdner, AuthService, optionales Land und Änderungs-/Anmelde-Callbacks.
+**Eingaben:** KuenstlerOrdner, AuthService, **optionaler Ländercode des TIDAL-Kontos, beispielsweise DE für Deutschland** und Änderungs-/Anmelde-Callbacks.
 
 **Ausgaben:** Widget-Baum aus AppBar und AlbumGrid.
 
@@ -332,7 +332,7 @@
 
 **Aufgabe:** Zeigt Albumkarten mit Cover, Titel, Künstlern und Jahr. Öffnet beim Antippen eine AlbumDetailPage mit denselben Diensten und Callbacks.
 
-**Eingaben:** List<Album>, AuthService, optionales Land und zwei Callbacks.
+**Eingaben:** List<Album>, AuthService, **optionaler Ländercode des TIDAL-Kontos, beispielsweise DE für Deutschland** und zwei Callbacks.
 
 **Ausgaben:** Albumraster und Navigation zur Detailseite.
 

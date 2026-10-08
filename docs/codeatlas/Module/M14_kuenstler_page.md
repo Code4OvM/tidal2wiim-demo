@@ -6,7 +6,7 @@
 
 **Aufgabe:** Ist eine kleine, zustandslose Hülle: Zeigt den Anzeigenamen als Seitentitel und übergibt die zugehörigen Alben an AlbumGrid.
 
-**Eingaben:** KuenstlerOrdner, AuthService, optionales Land und Änderungs-/Anmelde-Callbacks.
+**Eingaben:** KuenstlerOrdner, AuthService, **optionaler Ländercode des TIDAL-Kontos, beispielsweise DE für Deutschland** und Änderungs-/Anmelde-Callbacks.
 
 **Ausgaben:** Widget-Baum aus AppBar und AlbumGrid.
 

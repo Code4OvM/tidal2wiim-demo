@@ -6,7 +6,7 @@
 
 **Aufgabe:** Lädt die Titelliste aus TIDAL und Kategorien aus SQLite unabhängig voneinander. Ermöglicht Kategoriezuordnung und öffnet Album-, Track- oder Videolinks extern.
 
-**Eingaben:** Album, gemeinsamer AuthService, optionales Land sowie Callbacks für Anmeldung und Kategorieänderungen.
+**Eingaben:** Album, gemeinsamer AuthService, **optionaler Ländercode des TIDAL-Kontos, beispielsweise DE für Deutschland** sowie Callbacks für Anmeldung und Kategorieänderungen.
 
 **Ausgaben:** List<AlbumTitel> im Seitenzustand, lokale Kategorieauswahl und externe URLs; Rückmeldung nach gespeicherter Zuordnung.
 
