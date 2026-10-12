@@ -1201,6 +1201,53 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
   // END TIDAL2WIIM KUENSTLEREDITOR V1
 
+  // BEGIN TIDAL2WIIM EXCELEXPORT METHOD V1
+  bool _excelExportOffen = false;
+
+  Future<void> _albumExcelOeffnen() async {
+    if (_excelExportOffen ||
+        _alben.isEmpty ||
+        _ladeAlben ||
+        _hintergrundAktualisierung) {
+      return;
+    }
+    FocusScope.of(context).unfocus();
+    setState(() => _excelExportOffen = true);
+    final sitzungsVersion = _auth.epoch;
+    try {
+      await Navigator.of(context).push<void>(
+        MaterialPageRoute<void>(
+          builder: (_) => AlbumExcelExportPage(
+            albumAnzahl: _alben.length,
+            snapshotLaden: _albumExportSnapshotLesen,
+            land: _land,
+            jsonLesen: !_hatToken
+                ? null
+                : (uri) async {
+                    if (_auth.epoch != sitzungsVersion) {
+                      throw const TidalSessionChanged();
+                    }
+                    final client = http.Client();
+                    try {
+                      return await _apiLesen(client, _auth, [
+                        'v2',
+                        'albums',
+                      ], uri.queryParameters);
+                    } finally {
+                      client.close();
+                    }
+                  },
+          ),
+        ),
+      );
+    } finally {
+      if (mounted) {
+        setState(() => _excelExportOffen = false);
+      }
+    }
+  }
+  // END TIDAL2WIIM EXCELEXPORT METHOD V1
+
   Widget _laborSeite() {
     return Scaffold(
       appBar: AppBar(
@@ -1395,6 +1442,27 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                   style: TextStyle(fontSize: 12),
                 ),
                 // END TIDAL2WIIM KUENSTLEREDITOR BUTTON V1
+                // BEGIN TIDAL2WIIM EXCELEXPORT BUTTON V1
+                const SizedBox(height: 20),
+                OutlinedButton.icon(
+                  key: const ValueKey('labor-alben-excel-export'),
+                  onPressed:
+                      _alben.isEmpty ||
+                          _ladeAlben ||
+                          _hintergrundAktualisierung ||
+                          _excelExportOffen
+                      ? null
+                      : _albumExcelOeffnen,
+                  icon: const Icon(Icons.table_view_outlined),
+                  label: const Text('Alben als Excel-Liste exportieren'),
+                ),
+                const SizedBox(height: 6),
+                const Text(
+                  'Gesamte lokale Bibliothek mit Kategorien und freien '
+                  'Spalten für spätere Genre-Vorschläge.',
+                  style: TextStyle(fontSize: 12),
+                ),
+                // END TIDAL2WIIM EXCELEXPORT BUTTON V1
                 if (_lokalLaedt) ...[
                   const SizedBox(height: 18),
                   const LinearProgressIndicator(),

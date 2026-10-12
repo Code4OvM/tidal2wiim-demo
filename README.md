@@ -128,6 +128,16 @@ Der Codeatlas beschreibt die Aufgaben der 19 Dart-Module, ihre Verbindungen und 
 - [Klassen- und Sequenzdiagramme](docs/codeatlas/04_Diagrammuebersicht.md) – 14 Modelle mit Darstellungen und PlantUML-Quellen.
 - [Codeatlas als PDF](docs/codeatlas/Tidal2WiiM_Codeatlas_2026-10-08.pdf) – zusammenhängende Lesefassung, Version vom 08.10.2026.
 
+## Excel-Export ab Version 1.1.0
+
+Die gesamte lokal gespeicherte Albensammlung kann als **Excel-Datei (.xlsx)** exportiert werden. Jede TIDAL-Album-ID erhält eine Datenzeile; Künstler, Erscheinungsdatum, Kategorien und Links bleiben erhalten. Versions- und Qualitätsmerkmale lassen sich – sofern verfügbar – von TIDAL ergänzen. Fehlende Metadaten werden weder geraten noch stillschweigend entfernt.
+
+**Warum dieser Export?** Tidal2WiiM soll eine schlanke Anwendung zur persönlichen Albumorganisation bleiben. Die Excel-Datei ist eine offene Schnittstelle für Filterung, Auswertung und externe, gegebenenfalls KI-gestützte Genre-Vorschläge. Die drei zunächst leeren Spalten **Genre-Vorschläge**, **Sicherheit der Zuordnung** und **Anmerkung** bilden diese spätere Bearbeitung ab. Welche Kategorien tatsächlich angelegt und zugeordnet werden, entscheidet der Nutzer selbst. Es gibt keinen Rückimport und keine automatische Genrezuordnung.
+
+**Praxistest (12.10.2026):** 510 Alben wurden als 510 Datenzeilen exportiert. Zwei nicht auflösbare TIDAL-Einträge sind mit ID und Link erhalten geblieben.
+
+[Ausführliche Dokumentation](docs/Excel_Export_1.1.0.md)
+
 ## Projektstand
 
 Tidal2WiiM ist aus einem persönlichen Bedarf entstanden und wird auf dem eigenen Tablet genutzt. Die Kernfunktionen für Sammlung, Organisation und Übergabe an TIDAL sind umgesetzt. Das Repository dokumentiert diesen Entwicklungsstand und bildet die Grundlage für weitere Verbesserungen aus dem Alltag.

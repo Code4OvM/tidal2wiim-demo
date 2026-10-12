@@ -12,11 +12,14 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'models/kuenstler_sortierung.dart';
 import 'services/tidal_auth_service.dart';
+import 'models/album_export.dart';
+import 'pages/album_excel_export_page.dart';
 
 part 'core/hilfen.dart';
 part 'core/sammlung.dart';
 part 'models/modelle.dart';
 part 'data/lokale_datenbank.dart';
+part 'data/album_export_lesen.dart';
 part 'services/cover_cache.dart';
 part 'services/tidal_api.dart';
 part 'pages/home_page.dart';
